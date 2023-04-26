@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>886374537264-6mim8di02sk6rbvh2dqgd2lk8c8kq2gi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.886374537264-6mim8di02sk6rbvh2dqgd2lk8c8kq2gi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDVz3VymA3U6Cmn53MJPwM0yOaqKLKj9cQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>886374537264</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.es2al</string>
+	<key>PROJECT_ID</key>
+	<string>final-uni-project-ccdcf</string>
+	<key>STORAGE_BUCKET</key>
+	<string>final-uni-project-ccdcf.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:886374537264:ios:b6caf51728b62b84bb35f5</string>
+	<key>DATABASE_URL</key>
+	<string>https://final-uni-project-ccdcf-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
