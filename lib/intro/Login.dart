@@ -47,10 +47,10 @@ class _LoginState extends State<Login> {
                   Globals.typeOfUsers = 0;
                   if(FirebaseAuth.instance.currentUser == null){
                     signInWithGoogle().then((value){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Chat(),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Chat(),));
                     });
                   }else{
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Chat(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Chat(),));
                   }
 
             }, child: Text("Sign up As student ..!")),
