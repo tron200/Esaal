@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+import 'data/Globals.dart';
 import 'model/Course.dart';
 import 'model/answer.dart';
 
@@ -18,10 +19,10 @@ class Chat extends StatefulWidget {
 
 class _State extends State<Chat> {
   int courseId = 0;
-  int typeOfUser = 2; //0 : student  1 : Doctor  2: Admitted Questions
+  int typeOfUser = Globals.typeOfUsers; //0 : student  1 : Doctor  2: Admitted Questions
   late String me;
   var _currentIndex = 1; // navigator
-  late List<QuestionModel> questions ;
+  late List<QuestionModel> questions =[];
   String courseName = "Py";
   String courseFullName = "Python";
   TextEditingController questionController = TextEditingController();
@@ -35,7 +36,7 @@ class _State extends State<Chat> {
 
   _initializer() async {
     //get questons debend on type of user
-    me = FirebaseAuth.instance.currentUser!.displayName!;
+    me = await FirebaseAuth.instance.currentUser!.displayName!;
     questions = [];
     await _getQuestionsData();
   }
@@ -62,7 +63,9 @@ class _State extends State<Chat> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.arrow_back_ios),
+                    GestureDetector(
+                      onTap: () =>Navigator.pop(context),
+                        child: Icon(Icons.arrow_back_ios)),
                     Container(
                         padding: EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
@@ -95,10 +98,14 @@ class _State extends State<Chat> {
                 ),
                 Expanded(
                   child:
-                  ListView.builder(
+                  questions.length != 0?ListView.builder(
                       itemBuilder: (context, index) => Question(index, questions[index].ownerName,questions[index].id, questions[index].question, questions[index].answers,questions[index].show),
                     itemCount: questions.length,
                   )
+                :
+                Container(
+                  child:Text("there is no question now ..!")
+                )
                 ),
                 typeOfUser != 2?Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -421,6 +428,7 @@ class _State extends State<Chat> {
   }
   setQuestion(QuestionModel question) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/$courseId/questions/${question.id}");
+
     ref.keepSynced(true);
     await ref.set(question.toJson());
   }

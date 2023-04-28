@@ -12,7 +12,7 @@ class Course{
       int x = 0;
       questions.toList().forEach((v) {
         print(v.value);
-        this.questions.add(QuestionModel.fromJson(v.value,qshow.length != 0? qshow[x++].show:false));
+        this.questions.add(QuestionModel.fromJson(v.value,qshow.length != 0 && x < qshow.length? qshow[x++].show:false));
       });
     }
   }

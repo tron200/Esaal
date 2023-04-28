@@ -2,7 +2,7 @@ import 'package:es2al/chat/model/answer.dart';
 import 'package:uuid/uuid.dart';
 
 class QuestionModel{
-  String id = Uuid().v1();
+  String id = "${DateTime.now().millisecondsSinceEpoch}";
   String ownerName="";
   String question="";
   int status = 0;
@@ -18,7 +18,6 @@ class QuestionModel{
     status = json['status'];
     if (json['answers'] != null) {
       json['answers'].forEach((k,v) {
-        print("$k           $v       00000000000000000000000000000");
         answers.add(AnswerModel.fromJson(v));
       });
     }

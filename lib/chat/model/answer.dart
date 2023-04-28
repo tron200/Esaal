@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class AnswerModel{
-  String id = Uuid().v1();
+  String id = "${DateTime.now().millisecondsSinceEpoch}";
   String questionId = "";
   String ownerName="";
   String answer="";

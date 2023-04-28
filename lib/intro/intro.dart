@@ -65,11 +65,7 @@ class Intro extends StatelessWidget {
             ,
             ElevatedButton(
                 onPressed: (){
-                  if(FirebaseAuth.instance.currentUser == null){
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login(),));
-                  }else{
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Chat(),));
-                  }
                 },
                 style: TextButton.styleFrom(
                   fixedSize:const Size(202, 60),
