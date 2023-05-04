@@ -1,8 +1,8 @@
 import 'package:uuid/uuid.dart';
 
 class AnswerModel{
-  String id = "${DateTime.now().millisecondsSinceEpoch}";
-  String questionId = "";
+  int id = DateTime.now().millisecondsSinceEpoch;
+  int questionId = 0;
   String ownerName="";
   String answer="";
   bool checkBoxValue=false;

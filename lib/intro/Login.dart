@@ -16,20 +16,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Container(
         width: double.infinity,
         padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                Color(0xff124559),
-              ],
-            )
-        ),
+        color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +87,6 @@ class _LoginState extends State<Login> {
 
                 }, child: Text("Admitted questions"))
           ],
-        ),
         ),
 
     );

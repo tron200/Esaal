@@ -1,6 +1,4 @@
-import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:es2al/chat/model/question.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,7 @@ class Chat extends StatefulWidget {
 }
 
 class _State extends State<Chat> {
-  int courseId = 0;
+  String courseId = "1683137180868";
   int typeOfUser = Globals.typeOfUsers; //0 : student  1 : Doctor  2: Admitted Questions
   late String me;
   var _currentIndex = 1; // navigator
@@ -36,27 +34,16 @@ class _State extends State<Chat> {
 
   _initializer() async {
     //get questons debend on type of user
-    me = await FirebaseAuth.instance.currentUser!.displayName!;
+    //me = await FirebaseAuth.instance.currentUser!.displayName!;
+    me = "abdo";
     questions = [];
     await _getQuestionsData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.white,
-                  Color(0xff124559),
-                ],
-              )
-          ),
+    return Container(
+          color: Colors.transparent,
           child: Container(
             padding: EdgeInsets.all(12),
             child: Column(
@@ -67,7 +54,7 @@ class _State extends State<Chat> {
                       onTap: () =>Navigator.pop(context),
                         child: Icon(Icons.arrow_back_ios)),
                     Container(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
@@ -137,16 +124,14 @@ class _State extends State<Chat> {
                           child: ElevatedButton(
                               onPressed: (){
                                 AddNewQuestion();
-
                                 disappearKeyboard();
+
                                 setState(() {
-                                  typeOfUser == 0?typeOfUser = 1: typeOfUser = 0;
-                                  print("$typeOfUser pushed");
                                 });
                               },
                                 child: Center(child: Icon(Ionicons.md_send,size: 28,)),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Color(0xff125849)),
+                              backgroundColor: MaterialStatePropertyAll(Color(0xff49A078)),
                               shape: MaterialStatePropertyAll(CircleBorder(
 
                               ))
@@ -156,17 +141,13 @@ class _State extends State<Chat> {
                       ],
                   ),
                 ):Container(),
-                SizedBox(height: 10,),
-                _buildFloatingBar()
               ],
             ),
           ),
-        ),
-      ),
-    ));
+    );
   }
 
-  Widget Question(int index,String name, String QuestionId,String Question,List<AnswerModel> answers,bool showAnswer) {
+  Widget Question(int index,String name, int QuestionId,String Question,List<AnswerModel> answers,bool showAnswer) {
     int answerIndex = 0;
     TextEditingController _Controller = TextEditingController();
     answerControllers.add(_Controller);
@@ -200,7 +181,9 @@ class _State extends State<Chat> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //name
-                Text("$name",style: TextStyle(color: Color(0xffFFA500)),),
+                Text("$name",style: TextStyle(color: Color(0xffFFA500).withGreen(255),shadows: [
+                  Shadow(blurRadius: 2,color: Colors.yellow)
+                ]),),
                 //row so2al
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
@@ -222,12 +205,12 @@ class _State extends State<Chat> {
                     ...answers.map((e){
                             return Answer(index, answerIndex++,e.ownerName, e.answer, e.checkBoxValue);}).toList(),
                     typeOfUser != 2?Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Row(
                         children: [
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(5),
                               child: TextField(
                                 controller: answerControllers[index],
                                 keyboardType: TextInputType.multiline,
@@ -258,7 +241,7 @@ class _State extends State<Chat> {
                               },
                               child: Center(child: Icon(Ionicons.md_send,size: 28,)),
                               style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(Color(0xff125849)),
+                                  backgroundColor: MaterialStatePropertyAll(Color(0xff49A078)),
                                   shape: MaterialStatePropertyAll(CircleBorder(
 
                                   ))
@@ -275,7 +258,7 @@ class _State extends State<Chat> {
                           shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40)
                           )),
-                          backgroundColor: MaterialStatePropertyAll(Color(0xffFFA500))
+                          backgroundColor: MaterialStatePropertyAll(Color(0xff49A078),)
                         ),
                           onPressed: (){
                             AdmitAnswers(QuestionId);
@@ -305,91 +288,58 @@ class _State extends State<Chat> {
         return Container();
       }
     }
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18)
-        ),
-        color: Color(0xff125849),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("$name",style: TextStyle(color: Color(0xffFFA500)),),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(child: Text("$answer",style: TextStyle(color: Colors.white),)),
-                    typeOfUser == 1?
-                    Checkbox(
-                      checkColor: Colors.black,
-                      fillColor: MaterialStatePropertyAll(Colors.white),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      value: checkBoxValue,
-                      onChanged: (value){
-                        CheckAnswer(questions[questionIndex].id, questions[questionIndex].answers[answerIndex].id, value);
-                        setState(() {
+    return GestureDetector(
+      onTap: () {
+        CheckAnswer(questions[questionIndex].id, questions[questionIndex].answers[answerIndex].id, !questions[questionIndex].answers[answerIndex].checkBoxValue);
+        setState(() {
 
-                        });
-                    },
-                    ):Container(),
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15)
+          ),
+          color: Color(0xff537989),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("$name",style: TextStyle(color: Color(0xffFFA500).withGreen(255)),),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(child: Text("$answer",style: TextStyle(color: Colors.white),)),
+                      typeOfUser == 1?
+                      Checkbox(
+                        checkColor: Colors.black,
+                        fillColor: MaterialStatePropertyAll(Colors.white),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        value: checkBoxValue,
+                        onChanged: (value){
+                          CheckAnswer(questions[questionIndex].id, questions[questionIndex].answers[answerIndex].id, value);
+                          setState(() {
 
-                  ],
+                          });
+                      },
+                      ):Container(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildFloatingBar() {
-    return CustomNavigationBar(
-      iconSize: 30.0,
-      selectedColor: Color(0xff49A078),
-      strokeColor: Color(0xff49A078),
-      unSelectedColor: Colors.grey[600],
-      backgroundColor: Colors.white,
-      borderRadius: Radius.circular(40.0),
-      items: [
-        CustomNavigationBarItem(
-          icon: Icon(
-            AntDesign.appstore_o,
-          ),
-        ),
-        CustomNavigationBarItem(
-          icon: Icon(
-            Ionicons.ios_chatbubbles,
-
-          ),
-        ),
-        CustomNavigationBarItem(
-          icon: Icon(
-            MaterialCommunityIcons.telescope,
-          ),
-        ),
-        CustomNavigationBarItem(
-          icon: Icon(
-            AntDesign.user,
-          ),
-        ),
-      ],
-      currentIndex: _currentIndex,
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-      isFloating: true,
-    );
-  }
 
   AddNewQuestion() {
     // add question to db then refresh
@@ -400,7 +350,7 @@ class _State extends State<Chat> {
     }
   }
 
-  AddAnswer(int index, String questionId){
+  AddAnswer(int index, int questionId){
     if(answerControllers[index].text.isNotEmpty) {
           setAnswerToQuestion(AnswerModel(me, questionId ,answerControllers[index].text, false));
       answerControllers[index].clear();
@@ -413,17 +363,15 @@ class _State extends State<Chat> {
   }
   late Course course;
   Future<void> _getQuestionsData() async {
-    final DatabaseReference starCountRef =
-    FirebaseDatabase.instance.ref('subs/$courseId/questions');
-    starCountRef.keepSynced(true);
-    starCountRef.onValue.listen((DatabaseEvent event) {
+    final DatabaseReference questionJson = FirebaseDatabase.instance.ref('subs/$courseId');
+    questionJson.keepSynced(true);
+    questionJson.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
       print(data);
-      course = Course.fromJson(data, event.snapshot.children,questions);
+      course = Course.fromJson(data, event.snapshot.child("questions").children,questions);
       questions = course.questions;
-      setState(() {
-
-      });
+      if(!mounted) return;
+        setState(() {});
     });
   }
   setQuestion(QuestionModel question) async {
@@ -433,13 +381,15 @@ class _State extends State<Chat> {
     await ref.set(question.toJson());
   }
 
+
+
   setAnswerToQuestion(AnswerModel answer) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/$courseId/questions/${answer.questionId}/answers/${answer.id}");
     ref.keepSynced(true);
     await ref.set(answer.toJson());
   }
 
-  CheckAnswer(String questionId, String answerId, value) async {
+  CheckAnswer(int questionId, int answerId, value) async {
     // go to answer check or un checked it
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/$courseId/questions/$questionId/answers/$answerId");
     ref.keepSynced(true);
@@ -450,7 +400,7 @@ class _State extends State<Chat> {
     );
   }
 
-  AdmitAnswers(String questionId) async {
+  AdmitAnswers(int questionId) async {
     //go to question change it is status to 1
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/$courseId/questions/$questionId");
     ref.keepSynced(true);

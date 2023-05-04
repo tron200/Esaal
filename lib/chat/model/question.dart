@@ -2,7 +2,7 @@ import 'package:es2al/chat/model/answer.dart';
 import 'package:uuid/uuid.dart';
 
 class QuestionModel{
-  String id = "${DateTime.now().millisecondsSinceEpoch}";
+  int id = DateTime.now().millisecondsSinceEpoch;
   String ownerName="";
   String question="";
   int status = 0;
@@ -20,6 +20,13 @@ class QuestionModel{
       json['answers'].forEach((k,v) {
         answers.add(AnswerModel.fromJson(v));
       });
+      answers.sort((a, b) {
+        if(a.id > b.id){
+          return 1;
+        }else{
+          return -1;
+        }
+      },);
     }
   }
   Map<String, dynamic> toJson() {
