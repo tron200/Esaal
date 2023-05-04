@@ -1,5 +1,6 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:es2al/Courses/CreateCourse.dart';
+import 'package:es2al/chat/Choose%20Chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -98,7 +99,13 @@ class _MainPageState extends State<MainPage> {
   _ChoosePage(){
     switch(Globals.currentScreenIndex){
       case 1:
-        return Chat();
+        switch(Globals.currentScreen){
+          case Globals.routeToIdle:
+            return ChooseChat();
+          case Globals.routeToChat:
+            return Chat();
+        }
+        break;
 
       case 2:
         switch(Globals.currentScreen){
@@ -108,6 +115,9 @@ class _MainPageState extends State<MainPage> {
           case Globals.routeToCreateCourse:
             return CreateCourse(update);
         }
+        break;
+      case 3:
+        return Profile();
     }
     print("${Globals.currentScreenIndex}         ${Globals.currentScreen}");
     return Container(

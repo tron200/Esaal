@@ -5,4 +5,6 @@ class Globals{
   static const int routeToIdle = 0;
   static const int routeToCreateCourse = 1;
 
+
+  static const int routeToChat = 1;
 }
