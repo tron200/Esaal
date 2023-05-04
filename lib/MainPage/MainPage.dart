@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../Courses/Courses.dart';
+import '../auth/view/Profile.dart';
 import '../chat/chat.dart';
 import '../chat/data/Globals.dart';
 import '../intro/Login.dart';
