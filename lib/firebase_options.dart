@@ -65,6 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'final-uni-project-ccdcf',
     databaseURL: 'https://final-uni-project-ccdcf-default-rtdb.firebaseio.com',
     storageBucket: 'final-uni-project-ccdcf.appspot.com',
+    androidClientId: '886374537264-5d1o8ck774q82rft4hr762ak0ljpp58h.apps.googleusercontent.com',
     iosClientId: '886374537264-6mim8di02sk6rbvh2dqgd2lk8c8kq2gi.apps.googleusercontent.com',
     iosBundleId: 'com.example.es2al',
   );

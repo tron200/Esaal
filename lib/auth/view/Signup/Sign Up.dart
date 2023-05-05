@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
-
+  int typeOfuser;  //0:student   1:teacher
+  SignUp(this.typeOfuser);
   @override
   State<SignUp> createState() => _SignUp();
 }

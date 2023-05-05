@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'auth/view/Login/Login.dart';
 import 'firebase_options.dart';
 import 'intro/intro.dart';
 
@@ -39,8 +40,9 @@ class _MyApp extends State<MyApp> {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    FirebaseFirestore.instance.useFirestoreEmulator('"10.0.2.2"', 8080);
-    await FirebaseAuth.instance.useAuthEmulator('localhost/', 9099);
+
+    FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
+    await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
     FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
 
   }
@@ -48,7 +50,8 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Intro(),
+      //home: Intro(),
+      home: Login()
     );
   }
 

@@ -67,7 +67,7 @@ class _CoursesState extends State<Courses> {
                               Expanded(
                                   child: ListView.builder(
                                       itemBuilder: (context, index) {
-                                          if(courses[index].name.contains(searchName)){
+                                          if(courses[index].name.toLowerCase().contains(searchName.toLowerCase())){
                                             return Coure(courses[index]);
                                           }else{
                                             return Container();

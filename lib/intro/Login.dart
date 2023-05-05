@@ -1,3 +1,4 @@
+import 'package:es2al/MainPage/MainPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +104,10 @@ class _LoginState extends State<Login> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
+    // save user infro in provider
+
+    //route to Main page
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage(),));
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
