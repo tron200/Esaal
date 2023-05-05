@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'auth/view/Forgot Password/ForgotPassword.dart';
 import 'auth/view/Login/Login.dart';
 import 'firebase_options.dart';
 import 'intro/intro.dart';
@@ -51,7 +52,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: Intro(),
-      home: Login()
+      home: ForgotPassword(),
     );
   }
 
