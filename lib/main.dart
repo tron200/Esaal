@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:es2al/auth/view/Instructions.dart';
 import 'package:es2al/chat/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -52,7 +53,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: Intro(),
-      home: ForgotPassword(),
+      home: Instructions(),
     );
   }
 
