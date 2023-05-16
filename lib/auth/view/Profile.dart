@@ -71,7 +71,8 @@ class _ProfileState extends State<Profile> {
 
           isStudent?
           _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",))
-          : Container(),
+              : _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Master’s Specialization", "Master’s : ${Globals.user['master']}", AssetImage("assets/images/useredit.png",)),
+
           _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",)),
           ElevatedButton(
               onPressed: () async {
