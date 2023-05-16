@@ -1,11 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:es2al/MainPage/MainPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../chat/data/Globals.dart';
 
 
 
 class CompleteData extends StatefulWidget {
   int typeOfuser;
   int google;
+
+
 
   CompleteData(this.typeOfuser,this.google);
 
@@ -16,12 +23,23 @@ class CompleteData extends StatefulWidget {
 class _CompleteDataState extends State<CompleteData> {
   late bool isdoctor;
   late bool google;
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController levelController = TextEditingController();
+  TextEditingController iDController = TextEditingController();
+  TextEditingController masterController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
     isdoctor = widget.typeOfuser == 1?true:false;
     google = widget.google == 1?true:false;
     super.initState();
   }
+  
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -59,6 +77,7 @@ class _CompleteDataState extends State<CompleteData> {
                               }
                               return null;
                             },
+                          controller: firstNameController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -76,6 +95,7 @@ class _CompleteDataState extends State<CompleteData> {
                           ),
                           SizedBox(height: 15,),
                           TextFormField(
+                            controller: lastNameController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -93,6 +113,7 @@ class _CompleteDataState extends State<CompleteData> {
                           ),
                         SizedBox(height: 15,),
                         TextFormField(
+                          controller: phoneController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -109,6 +130,7 @@ class _CompleteDataState extends State<CompleteData> {
                           ),
                         SizedBox(height: 15,),
                         isdoctor?Container():TextFormField(
+                          controller: iDController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -127,6 +149,7 @@ class _CompleteDataState extends State<CompleteData> {
                         isdoctor?Container():SizedBox(height: 15,),
                         isdoctor
                             ? TextFormField(
+                          controller: masterController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -142,6 +165,7 @@ class _CompleteDataState extends State<CompleteData> {
                                       color: Color(0xff124559))),
                             ),
                           ) : TextFormField(
+                          controller: levelController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -159,6 +183,7 @@ class _CompleteDataState extends State<CompleteData> {
                           ),
                         SizedBox(height: 15,),
                         google?Container():TextFormField(
+                          controller: emailController,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -176,6 +201,7 @@ class _CompleteDataState extends State<CompleteData> {
                           ),
                         google?Container():SizedBox(height: 15,),
                         google?Container():TextFormField(
+                          controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               filled: true,
@@ -238,12 +264,67 @@ class _CompleteDataState extends State<CompleteData> {
   }
 
   bool _validation() {
-    return false;
+    return true;
   }
 
-  void _saveDataAndNavigteToDashBoard() {
+  Future<void> _saveDataAndNavigteToDashBoard() async {
     //save to firebase and provider
-
+    await _saveInformationToFireBase().then((value){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage(),));
+    });
     //go to dashboard
+  }
+
+  Future<void> _saveInformationToFireBase() async {
+    Map<String,dynamic> map = Map();
+    
+    map['firstName'] = firstNameController.text;
+    map['lastName'] = lastNameController.text;
+    map['phone'] = phoneController.text;
+    if(google){
+      map['id'] =  FirebaseAuth.instance.currentUser?.uid;
+      map['email'] = FirebaseAuth.instance.currentUser?.email;
+    }else{
+      await _SignInWithEmailAndPassword(emailController.text,passwordController.text).then((value){
+        map['id'] = FirebaseAuth.instance.currentUser?.uid;
+        map['email'] = emailController.text;
+      });
+    }
+    if(isdoctor){
+      map['master'] = masterController.text;
+    }else{
+      map['studentId'] = iDController.text;
+      map['level'] = levelController.text;
+    }
+
+    //save data
+
+    await FirebaseFirestore.instance.collection("Users").doc("${map['id']}").set(map).then((value){
+        Globals.user = map;
+        if(isdoctor){
+          Globals.typeOfUsers = 1;
+        }else{
+          Globals.typeOfUsers = 0;
+        }
+        Globals.currentScreen = 0;
+        Globals.currentScreenIndex = 0;
+    });
+  }
+
+  Future<void> _SignInWithEmailAndPassword(String emailAddress, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

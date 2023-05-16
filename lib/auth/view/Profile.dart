@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../chat/data/Globals.dart';
+import 'Login/Login.dart';
 
 class Profile extends StatefulWidget {
 
@@ -10,7 +14,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    bool isStudent = true;
+    bool isStudent = Globals.typeOfUsers == 0?true:false;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,18 +63,22 @@ class _ProfileState extends State<Profile> {
           _buildElement(
             Image(image: AssetImage("assets/images/personalcard.png") ),
             "Name",
-            "Ahmed Mohmed",
+            "${Globals.user['firstName']} ${Globals.user['lastName']}",
           AssetImage("assets/images/useredit.png")),
 
-          _buildElement(Icon(Icons.account_circle_outlined,color: Colors.white,), "ID", "1827237", AssetImage("assets/images/useredit.png",)),
-          _buildElement(Icon(Icons.phone_enabled, color: Colors.white,), "Phone", "01224573884", AssetImage("assets/images/useredit.png",)),
+          Globals.typeOfUsers == 0?_buildElement(Icon(Icons.account_circle_outlined,color: Colors.white,), "ID", "${Globals.user['studentId']}", AssetImage("assets/images/useredit.png",)):Container(),
+          _buildElement(Icon(Icons.phone_enabled, color: Colors.white,), "Phone", "${Globals.user['phone']}", AssetImage("assets/images/useredit.png",)),
 
           isStudent?
-          _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level 4", AssetImage("assets/images/useredit.png",))
+          _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",))
           : Container(),
-          _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "Example@gmail.com", AssetImage("assets/images/useredit.png",)),
+          _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",)),
           ElevatedButton(
-              onPressed: (){},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut().then((value){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login(),));
+                });
+              },
               style: TextButton.styleFrom(
                 backgroundColor: const Color(0xff124559),
                 shape: const RoundedRectangleBorder(
@@ -111,7 +119,7 @@ class _ProfileState extends State<Profile> {
                   onTap: (){
                     print("done");
                   },
-                  child: Image(image: img,)
+                  child: title == "Email"?Container():Image(image: img,)
               ),
             ],
           ),
