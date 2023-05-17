@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:es2al/auth/view/Signup/Sign%20Up.dart';
+import 'package:es2al/chat/data/Globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -269,12 +270,23 @@ class _LoginState extends State<Login> {
   Future<void> _loginWithEmail(String email, String password) async {
     print("$email         $password");
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password
-      );
-      //save data then route
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage(),));
+      ).then((value) async {
+        await FirebaseFirestore.instance.collection("Users").doc(value.user?.uid).get().then((doc){
+          if(doc != null) {
+            Globals.user = doc.data()!;
+            Globals.currentScreen = 0;
+            Globals.currentScreenIndex = 0;
+            Globals.typeOfUsers = Globals.user['type'];
+            //save data then route
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage(),));
+          }
+        });
+
+      });
+      
       print(FirebaseAuth.instance.currentUser?.email);
     } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -305,13 +317,16 @@ class _LoginState extends State<Login> {
   }
 
   _manageUserRedirection() async {
-    print("in");
     try {
       // Get reference to Firestore collection
-      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      CollectionReference users = FirebaseFirestore.instance.collection('Users');
       var doc = await users.doc(FirebaseAuth.instance.currentUser?.uid).get();
       //save his info
       if(doc.exists) {
+        Globals.user = doc.data() as Map;
+        Globals.currentScreen = 0;
+        Globals.currentScreenIndex = 0;
+        Globals.typeOfUsers = Globals.user['type'];
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainPage(),));
       }else{

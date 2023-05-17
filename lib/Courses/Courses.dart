@@ -20,7 +20,10 @@ class _CoursesState extends State<Courses> {
   TextEditingController controller = TextEditingController();
   @override
   void initState() {
-    _getCourses();
+    print("inittttttttttttttttttttttttt");
+    _getCourses().then((value){
+      widget.update;
+    });
     super.initState();
   }
   String searchName = "";
@@ -84,7 +87,7 @@ class _CoursesState extends State<Courses> {
                       padding: const EdgeInsets.only(left: 15,top: 10),
                       child: Row(
                         children: [
-                          Text("Create a new course",style: TextStyle(color: Colors.white),),
+                          Text(Globals.typeOfUsers == 1?"Create a new course":"Enroll a new couse",style: TextStyle(color: Colors.white),),
                           Expanded(
                               child: Container()
                           ),
@@ -111,19 +114,27 @@ class _CoursesState extends State<Courses> {
   }
 
 
-  void _getCourses() {
+  Future<void> _getCourses() async {
     final DatabaseReference coursesJson = FirebaseDatabase.instance.ref('subs');
-    coursesJson.keepSynced(true);
-    coursesJson.onValue.listen((DatabaseEvent event) {
-      var data = event.snapshot.value;
-      print(data);
-      event.snapshot.children.toList().forEach((v) {
-        this.courses.add(Course.fromJson(v.value,[],[]));
+     await coursesJson.get().then((v) {
+       print(v.value);
+       for(var x in v.children) {
+         if (Globals.typeOfUsers == 1) {
+           if ((x.value! as dynamic)['ownerId'] == Globals.user['id']) {
+             courses.add(Course.fromJson(x.value, [], []));
+           }
+         } else {
+           // student
+           if ((Globals.user['courses'] as List).contains(
+               (x.value! as dynamic)['id'])) {
+             courses.add(Course.fromJson(x.value, [], []));
+           }
+         }
+       }
+       setState(() {
+
+       });
       });
-      this.courses = courses;
-      if(!mounted) return;
-      setState(() {});
-    });
   }
 
   Coure(Course course) {
@@ -145,7 +156,7 @@ class _CoursesState extends State<Courses> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 15),
-              child: Text("${course.name}",style: TextStyle(color: Colors.white,fontSize: 25, fontWeight: FontWeight.w900),),
+              child: Text(Globals.typeOfUsers == 0?"${course.name}":"${course.name} #${course.code}",style: TextStyle(color: Colors.white,fontSize: 25, fontWeight: FontWeight.w900),),
             )
           ],
         ),

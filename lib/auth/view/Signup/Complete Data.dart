@@ -229,9 +229,9 @@ class _CompleteDataState extends State<CompleteData> {
                                   borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if(_validation()){
-                                _saveDataAndNavigteToDashBoard();
+                                await _saveDataAndNavigteToDashBoard();
                               }
                             },
                             child: const Text(
@@ -287,14 +287,18 @@ class _CompleteDataState extends State<CompleteData> {
     }else{
       await _SignInWithEmailAndPassword(emailController.text,passwordController.text).then((value){
         map['id'] = FirebaseAuth.instance.currentUser?.uid;
+        print("sssssssssssssssss ${FirebaseAuth.instance.currentUser?.uid}");
         map['email'] = emailController.text;
       });
     }
     if(isdoctor){
       map['master'] = masterController.text;
+      map['type'] = 1;
     }else{
       map['studentId'] = iDController.text;
       map['level'] = levelController.text;
+      map['type'] = 0;
+      map['courses'] = [];
     }
 
     //save data

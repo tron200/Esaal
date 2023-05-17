@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,24 +20,27 @@ class _CreateCourseState extends State<CreateCourse> {
   late String hint;
   late String button;
   TextEditingController _controller = TextEditingController();
+
   @override
   void initState() {
-    switch(Globals.typeOfUsers){
-      case 0://student
+    switch (Globals.typeOfUsers) {
+      case 0: //student
         title = "Enroll Course";
         hint = "Course Code";
         button = "Enroll";
         break;
-      case 1://Doctor
+      case 1: //Doctor
         title = "Create Course";
         hint = "Course Name";
         button = "Create";
     }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(Globals.typeOfUsers);
     return Container(
       width: double.infinity,
       child: Column(
@@ -44,7 +48,7 @@ class _CreateCourseState extends State<CreateCourse> {
           Row(children: [
             //back button
             GestureDetector(
-                onTap: (){
+                onTap: () {
                   Globals.currentScreen = Globals.routeToIdle;
                   widget.update();
                 },
@@ -94,19 +98,32 @@ class _CreateCourseState extends State<CreateCourse> {
                           ),
                         ),
                         ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_controller.text.isNotEmpty) {
-                                addCourse(Course(_controller.text, "ownerId")).then((value){
-                                //inform user
+                                if (Globals.typeOfUsers == 1) {
+                                  await addCourse(Course(
+                                      _controller.text, Globals.user['id']))
+                                      .then((value) {
+                                    //inform user
 
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text("${_controller.text} Added !"),
-                                ));
-                                //return to idle
-                                Globals.currentScreen = Globals.routeToIdle;
-                                widget.update();
-                                });
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                      Text("${_controller.text} Added !"),
+                                    ));
+                                    //return to idle
+                                    Globals.currentScreen = Globals.routeToIdle;
+                                    widget.update();
+                                  });
+                                } else {
+                                  await enrollCourse(_controller.text).then((value){
+                                    Globals.currentScreen = Globals.routeToIdle;
+                                    widget.update();
+                                    setState(() {
+
+                                    });
+                                  });
+                                }
                               }
                             },
                             style: ButtonStyle(
@@ -134,11 +151,64 @@ class _CreateCourseState extends State<CreateCourse> {
   }
 
   Future<void> addCourse(Course course) async {
-
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/${course.id}");
     ref.keepSynced(true);
     await ref.set(course.toJson());
     print(course.toJson());
   }
 
+  Future<void> enrollCourse(String courseCode) async {
+    int CourseId = 0;
+    bool courseFound = false;
+
+    //check if course found
+    final coursesJson = FirebaseDatabase.instance.ref('subs');
+    await coursesJson.get().then((value) async {
+        for(var v in value.children) {
+          print((v.value! as dynamic)['code']);
+          if ((v.value! as dynamic)['code'] == courseCode) {
+            courseFound = true;
+            CourseId = (v.value! as dynamic)['id'];
+            print("done  $courseFound");
+          }
+          if (courseFound) {
+            courseFound = false;
+            print("hi");
+            // add student id to course
+            var course = FirebaseDatabase.instance.ref('subs/$CourseId');
+            await course.get().then((value) async {
+              if(!((value.value! as dynamic)['students']as List).contains(Globals.user['id'].toString())){
+                  List students = <String>[...(value.value! as dynamic)['students'],
+                    Globals.user['id'].toString()
+                  ];
+                  await course.update({
+                    'students': students
+                  });
+                  // add course Id to Student
+                  var ref = FirebaseFirestore.instance.collection("Users").doc(
+                      Globals.user['id']);
+                  await ref.get().then((value) async {
+                    List courses = value.data()!['courses'];
+                    courses.add(CourseId);
+                    await ref.update({
+                      'courses': courses
+                    });
+                  });
+
+                  var user = FirebaseFirestore.instance.collection("Users").doc(Globals.user['id']);
+                  await user.get().then((value){
+                    Globals.user = value.data() as Map;
+                    print(Globals.user);
+                  });
+                  return;
+            }else{
+                // you are already in
+              }
+              });
+
+          }
+        }
+      });
+
+  }
 }

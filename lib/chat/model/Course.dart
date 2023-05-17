@@ -8,6 +8,7 @@ class Course{
   int id= DateTime.now().millisecondsSinceEpoch;
   String ownerId="";
   String code ="";
+  List students = [""];
   Course(this.name,this.ownerId){
    code = Uuid().v1().substring(0,7);
   }
@@ -18,6 +19,7 @@ class Course{
     id = json['id'];
     ownerId = json['ownerId'];
     code = json['code'];
+    students = json['students'];
     if (json['questions'] != null) {
       int x = 0;
       questions.toList().forEach((v) {
@@ -40,6 +42,7 @@ class Course{
     course['id'] = id;
     course['ownerId'] = ownerId;
     course['code'] = code;
+    course['students'] = students;
     return course;
   }
 }

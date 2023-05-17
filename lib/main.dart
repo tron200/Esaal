@@ -43,11 +43,9 @@ class _MyApp extends State<MyApp> {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-
-    FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
-    await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
-    FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
-
+    //FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
+    //await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
+    //FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
   }
   @override
   Widget build(BuildContext context) {

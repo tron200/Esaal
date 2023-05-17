@@ -9,7 +9,6 @@ import '../Courses/Courses.dart';
 import '../auth/view/Profile.dart';
 import '../chat/chat.dart';
 import '../chat/data/Globals.dart';
-import '../intro/Login.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -82,8 +81,10 @@ class _MainPageState extends State<MainPage> {
       ],
       currentIndex: Globals.currentScreenIndex,
       onTap: (index) {
+        Globals.currentScreenIndex = index;
+        Globals.currentScreen = Globals.routeToIdle;
         setState(() {
-          Globals.currentScreenIndex = index;
+
         });
       },
       isFloating: true,
@@ -102,9 +103,11 @@ class _MainPageState extends State<MainPage> {
       case 1:
         switch(Globals.currentScreen){
           case Globals.routeToIdle:
-            return ChooseChat();
+            return ChooseChat(update);
+            break;
           case Globals.routeToChat:
-            return Chat();
+            return Chat(update);
+            break;
         }
         break;
 
@@ -113,12 +116,15 @@ class _MainPageState extends State<MainPage> {
           case Globals.routeToIdle:
 
             return Courses(update);
+            break;
           case Globals.routeToCreateCourse:
             return CreateCourse(update);
+            break;
         }
         break;
       case 3:
         return Profile();
+        break;
     }
     print("${Globals.currentScreenIndex}         ${Globals.currentScreen}");
     return Container(

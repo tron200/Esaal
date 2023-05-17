@@ -9,20 +9,20 @@ import 'model/Course.dart';
 import 'model/answer.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({Key? key}) : super(key: key);
+  Function update;
+  Chat(this.update);
 
   @override
   State<Chat> createState() => _State();
 }
 
 class _State extends State<Chat> {
-  String courseId = "1683137180868";
+  late int courseId;
   int typeOfUser = Globals.typeOfUsers; //0 : student  1 : Doctor  2: Admitted Questions
   late String me;
-  var _currentIndex = 1; // navigator
   late List<QuestionModel> questions =[];
-  String courseName = "Py";
-  String courseFullName = "Python";
+  late String courseName;
+  late String courseFullName;
   TextEditingController questionController = TextEditingController();
   List<TextEditingController> answerControllers = [];
 
@@ -35,7 +35,10 @@ class _State extends State<Chat> {
   _initializer() async {
     //get questons debend on type of user
     //me = await FirebaseAuth.instance.currentUser!.displayName!;
-    me = "abdo";
+    courseName = Globals.courseName;
+    courseFullName = Globals.courseFullName;
+    courseId = Globals.courseId;
+    me = "${Globals.user['firstName']} ${Globals.user['lastName']}";
     questions = [];
     await _getQuestionsData();
   }
@@ -51,7 +54,10 @@ class _State extends State<Chat> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () =>Navigator.pop(context),
+                      onTap: () {
+                        Globals.currentScreen = Globals.routeToIdle;
+                        widget.update();
+                      },
                         child: Icon(Icons.arrow_back_ios)),
                     Container(
                         padding: EdgeInsets.all(10.0),
@@ -94,7 +100,7 @@ class _State extends State<Chat> {
                   child:Text("there is no question now ..!")
                 )
                 ),
-                typeOfUser != 2?Padding(
+                !Globals.admittedAnswer?Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
                       children: [
@@ -151,7 +157,7 @@ class _State extends State<Chat> {
     int answerIndex = 0;
     TextEditingController _Controller = TextEditingController();
     answerControllers.add(_Controller);
-    if(typeOfUser == 2){ // admitted only
+    if(Globals.admittedAnswer){ // admitted only
       if(questions[index].status == 0){ // not admitted
         return Container();
       }
@@ -171,7 +177,7 @@ class _State extends State<Chat> {
         width: double.infinity,
         child: Card(
           shape: RoundedRectangleBorder(
-              borderRadius: typeOfUser == 2?BorderRadius.only(topLeft: Radius.circular(18),topRight: Radius.circular(18),bottomRight: Radius.circular(18),bottomLeft: Radius.circular(18))
+              borderRadius: Globals.admittedAnswer?BorderRadius.only(topLeft: Radius.circular(18),topRight: Radius.circular(18),bottomRight: Radius.circular(18),bottomLeft: Radius.circular(18))
                   :BorderRadius.only(topLeft: Radius.circular(0),topRight: Radius.circular(18),bottomRight: Radius.circular(18),bottomLeft: Radius.circular(18))
           ),
           color: Color(0xff124559),
@@ -204,7 +210,7 @@ class _State extends State<Chat> {
                   children: [
                     ...answers.map((e){
                             return Answer(index, answerIndex++,e.ownerName, e.answer, e.checkBoxValue);}).toList(),
-                    typeOfUser != 2?Padding(
+                    !Globals.admittedAnswer?Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Row(
                         children: [
@@ -251,7 +257,7 @@ class _State extends State<Chat> {
                         ],
                       ),
                     ):Container(),
-                    typeOfUser == 1?Container(
+                    (typeOfUser == 1 && !Globals.admittedAnswer)?Container(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ButtonStyle(
@@ -283,7 +289,7 @@ class _State extends State<Chat> {
   }
 
   Widget Answer(int questionIndex,int answerIndex,String name, String answer, bool checkBoxValue) {
-    if(typeOfUser == 2){ // admitted only
+    if(Globals.admittedAnswer){ // admitted only
       if(questions[questionIndex].answers[answerIndex].checkBoxValue == false){ // not admitted
         return Container();
       }
@@ -362,10 +368,11 @@ class _State extends State<Chat> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
   late Course course;
+  var listen;
   Future<void> _getQuestionsData() async {
-    final DatabaseReference questionJson = FirebaseDatabase.instance.ref('subs/$courseId');
+    var questionJson = FirebaseDatabase.instance.ref('subs/$courseId');
     questionJson.keepSynced(true);
-    questionJson.onValue.listen((DatabaseEvent event) {
+    listen = questionJson.onValue.listen((DatabaseEvent event) {
       var data = event.snapshot.value;
       print(data);
       course = Course.fromJson(data, event.snapshot.child("questions").children,questions);
@@ -411,5 +418,13 @@ class _State extends State<Chat> {
     );
     //remove all un cheacked answers
   }
+
+
+  @override
+  void dispose() {
+    listen.cancel();
+    super.dispose();
+  }
+
 
 }
