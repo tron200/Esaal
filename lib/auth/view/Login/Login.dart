@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:es2al/auth/view/Forgot%20Password/ForgotPassword.dart';
 import 'package:es2al/auth/view/Signup/Sign%20Up.dart';
 import 'package:es2al/chat/data/Globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -164,7 +165,9 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 30,),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword(),));
+                        },
                         child: const Text(
                           "Forgot your password?",
                           style: TextStyle(

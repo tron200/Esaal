@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,12 +57,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                         SizedBox(height: 20,),
                         TextFormField(
+                          controller: controller,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: const Color(0xffD9D9D9),
                             prefixIcon:
                                 const Icon(Icons.perm_identity_outlined),
-                            hintText: "Email ID / Mobile number",
+                            hintText: "Email",
                             hintStyle: const TextStyle(
                                 color: Color(0xff124559), fontSize: 15),
                             border: OutlineInputBorder(
@@ -83,7 +86,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                try {
+                                  await FirebaseAuth.instance
+                                      .sendPasswordResetEmail(
+                                      email: controller.text);
+                                  print("hi");
+                                }catch(e){
+
+                                  print(e);
+                                }
+                              },
                               child: const Text(
                                 "Submit",
                                 style: TextStyle(
@@ -102,6 +115,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   fontSize: 15, color: Color(0xff17202A)),
                             ),
                             GestureDetector(
+                              onTap: (){
+                                Navigator.pop(context);
+                              },
                               child: Text("Log In",
                                   style: TextStyle(
                                       fontSize: 15, color: Color(0xffFFA500))),
