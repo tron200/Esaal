@@ -185,7 +185,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp(1),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp(1),));
                         },
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 30),
@@ -214,7 +214,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUp(0),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp(0),));
                         },
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 30),

@@ -69,7 +69,9 @@ class _SignUp extends State<SignUp> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
                                   child: const Text(
                                     " Log In",
                                     textAlign:TextAlign.end,
@@ -98,7 +100,7 @@ class _SignUp extends State<SignUp> {
                           padding: EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             signInWithGoogle().then((value){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CompleteData(widget.typeOfuser,1),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteData(widget.typeOfuser,1),));
                             });
                           },
                         ),
@@ -139,7 +141,7 @@ class _SignUp extends State<SignUp> {
                                 BorderRadius.all(Radius.circular(12))),
                           ),
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CompleteData(widget.typeOfuser,0),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CompleteData(widget.typeOfuser,0),));
                           },
                           child: const Text(
                             "sign up with email",

@@ -320,7 +320,7 @@ class _State extends State<Chat> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(child: Text("$answer",style: TextStyle(color: Colors.white),)),
-                      typeOfUser == 1?
+                      typeOfUser == 1 && !Globals.admittedAnswer?
                       Checkbox(
                         checkColor: Colors.black,
                         fillColor: MaterialStatePropertyAll(Colors.white),

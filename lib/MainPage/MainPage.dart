@@ -19,34 +19,43 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
+  void initState() {
+    Globals.currentScreenIndex = 0;
+    Globals.currentScreen = 0;
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.white,
-                      Color(0xff124559),
-                    ],
-                  )
-              ),
+    return WillPopScope(
+      onWillPop: _onBack,
+      child: Scaffold(
+          body: SafeArea(
               child: Container(
-                padding: EdgeInsets.all(12),
-                child: Column(
-                  children: [
-                    Expanded(child:
-                    _ChoosePage()
-                    ),
-                    _buildFloatingBar()
-                  ],
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.white,
+                        Color(0xff124559),
+                      ],
+                    )
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  child: Column(
+                    children: [
+                      Expanded(child:
+                      _ChoosePage()
+                      ),
+                      _buildFloatingBar()
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        );
+    );
   }
   Widget _buildFloatingBar() {
     return CustomNavigationBar(
@@ -130,4 +139,24 @@ class _MainPageState extends State<MainPage> {
     return Container(
       child: Text("error"),
     );
-  }}
+  }
+
+  Future<bool> _onBack() {
+    if(Globals.currentScreen != Globals.routeToIdle){
+      Globals.currentScreen = Globals.routeToIdle;
+      setState(() {
+
+      });
+      return Future.value(false);
+    }else if(Globals.currentScreenIndex != 0){
+      Globals.currentScreenIndex = 0;
+      setState(() {
+
+      });
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
+
+}
