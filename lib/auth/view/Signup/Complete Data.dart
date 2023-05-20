@@ -6,15 +6,11 @@ import 'package:flutter/material.dart';
 
 import '../../../chat/data/Globals.dart';
 
-
-
 class CompleteData extends StatefulWidget {
   int typeOfuser;
   int google;
 
-
-
-  CompleteData(this.typeOfuser,this.google);
+  CompleteData(this.typeOfuser, this.google);
 
   @override
   State<CompleteData> createState() => _CompleteDataState();
@@ -23,23 +19,22 @@ class CompleteData extends StatefulWidget {
 class _CompleteDataState extends State<CompleteData> {
   late bool isdoctor;
   late bool google;
-
+  String _dropDownValue = "Level 1";
+  String masters = "";
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController levelController = TextEditingController();
   TextEditingController iDController = TextEditingController();
-  TextEditingController masterController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
-    isdoctor = widget.typeOfuser == 1?true:false;
-    google = widget.google == 1?true:false;
+    isdoctor = widget.typeOfuser == 1 ? true : false;
+    google = widget.google == 1 ? true : false;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -57,7 +52,7 @@ class _CompleteDataState extends State<CompleteData> {
             ),
             Center(
               child: Container(
-                margin: EdgeInsets.only(top:120,left: 30,right: 30),
+                margin: EdgeInsets.only(top: 120, left: 30, right: 30),
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -71,166 +66,218 @@ class _CompleteDataState extends State<CompleteData> {
                     child: Column(
                       children: [
                         TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                           controller: firstNameController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.perm_identity_outlined),
-                              hintText: "First Name",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon:
+                                const Icon(Icons.perm_identity_outlined),
+                            hintText: "First Name",
+                            hintStyle: const TextStyle(
+                                color: Color(0xff124559), fontSize: 15),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    const BorderSide(color: Color(0xff124559))),
                           ),
-                          SizedBox(height: 15,),
-                          TextFormField(
-                            controller: lastNameController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.perm_identity_outlined),
-                              hintText: "last Name",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          controller: lastNameController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon:
+                                const Icon(Icons.perm_identity_outlined),
+                            hintText: "last Name",
+                            hintStyle: const TextStyle(
+                                color: Color(0xff124559), fontSize: 15),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Color(0xff124559))),
                           ),
-                        SizedBox(height: 15,),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         TextFormField(
                           controller: phoneController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon: const Icon(Icons.phone_enabled),
-                              hintText: "Phone",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon: const Icon(Icons.phone_enabled),
+                            hintText: "Phone",
+                            hintStyle: const TextStyle(
+                                color: Color(0xff124559), fontSize: 15),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Color(0xff124559))),
                           ),
-                        SizedBox(height: 15,),
-                        isdoctor?Container():TextFormField(
-                          controller: iDController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.account_circle_outlined),
-                              hintText: "ID",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
-                          ),
-                        isdoctor?Container():SizedBox(height: 15,),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         isdoctor
-                            ? TextFormField(
-                          controller: masterController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.account_circle_outlined),
-                              hintText: "Master’s Specialization",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: Color(0xff124559))),
-                            ),
-                          ) : TextFormField(
-                          controller: levelController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.stacked_bar_chart),
-                              hintText: "Level",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
-                                      color: Color(0xff124559))),
-                            ),
+                            ? Container()
+                            : TextFormField(
+                                controller: iDController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon:
+                                      const Icon(Icons.account_circle_outlined),
+                                  hintText: "ID",
+                                  hintStyle: const TextStyle(
+                                      color: Color(0xff124559), fontSize: 15),
+                                  border: const OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xff124559))),
+                                ),
+                              ),
+                        isdoctor
+                            ? Container()
+                            : SizedBox(
+                                height: 15,
+                              ),
+                        isdoctor
+                            ? Container(
+                               padding: const EdgeInsets.symmetric(horizontal: 5),
+                               decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                        SizedBox(height: 15,),
-                        google?Container():TextFormField(
-                          controller: emailController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon:
-                              const Icon(Icons.perm_identity_outlined),
-                              hintText: "Email",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
-                          ),
-                        google?Container():SizedBox(height: 15,),
-                        google?Container():TextFormField(
-                          controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon:
-                                  const Icon(Icons.remove_red_eye_outlined)),
-                              hintText: "Password",
-                              hintStyle: const TextStyle(
-                                  color: Color(0xff124559), fontSize: 15),
-                              border: const OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                  const BorderSide(color: Color(0xff124559))),
-                            ),
-                          ),
-                        google?Container():SizedBox(height: 15,),
+                               child: DropdownButton(
+                                 underline: null,
+                                 items: const [
+                                    DropdownMenuItem(value: "Masters As",child: Text("Masters AS"),),
+                                    DropdownMenuItem(value: "Masters Hy",child: Text("Masters HY"),),
+                                    DropdownMenuItem(value: "Masters DS",child: Text("Masters DS"),),
+                                    DropdownMenuItem(value: "Masters GR",child: Text("Masters GR"),),
+                                    DropdownMenuItem(value: "Masters RF",child: Text("Masters RF"),),
+                                  ],
+                                 isExpanded: true,
+                                 hint: const Text("Select Masters"),
+                                 value:  masters!.isEmpty? null : masters,
+                                 onChanged: (String? masterSelect){
+                                   if(masterSelect is String){ setState(() { masters = masterSelect;});}
+                                 },
+                                  ),
+                        )
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: DropdownButton(
+                                  items: const [
+                                    DropdownMenuItem(
+                                        value: "Level 1",
+                                        child: Text("level 1")),
+                                    DropdownMenuItem(
+                                        value: "level 2",
+                                        child: Text("level 2")),
+                                    DropdownMenuItem(
+                                        value: "level 3",
+                                        child: Text("level 3")),
+                                    DropdownMenuItem(
+                                        value: "level 4",
+                                        child: Text("level 4")),
+                                  ],
+                                  iconSize: 30,
+                                  value: _dropDownValue!.isEmpty
+                                      ? null
+                                      : _dropDownValue,
+                                  hint: const Text(
+                                    "Select level",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  style: const TextStyle(
+                                      fontSize: 17, color: Colors.black),
+                                  isExpanded: true,
+                                  onChanged: dropDownFun,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        google
+                            ? Container()
+                            : TextFormField(
+                                controller: emailController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon:
+                                      const Icon(Icons.perm_identity_outlined),
+                                  hintText: "Email",
+                                  hintStyle: const TextStyle(
+                                      color: Color(0xff124559), fontSize: 15),
+                                  border: const OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xff124559))),
+                                ),
+                              ),
+                        google
+                            ? Container()
+                            : SizedBox(
+                                height: 15,
+                              ),
+                        google
+                            ? Container()
+                            : TextFormField(
+                                controller: passwordController,
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                          Icons.remove_red_eye_outlined)),
+                                  hintText: "Password",
+                                  hintStyle: const TextStyle(
+                                      color: Color(0xff124559), fontSize: 15),
+                                  border: const OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xff124559))),
+                                ),
+                              ),
+                        google
+                            ? Container()
+                            : SizedBox(
+                                height: 15,
+                              ),
                         ElevatedButton(
                             style: TextButton.styleFrom(
                               backgroundColor: const Color(0xff124559),
                               fixedSize: const Size(174, 35),
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
+                                      BorderRadius.all(Radius.circular(12))),
                             ),
                             onPressed: () async {
-                              if(_validation()){
+                              if (_validation()) {
                                 await _saveDataAndNavigteToDashBoard();
                               }
                             },
@@ -263,61 +310,81 @@ class _CompleteDataState extends State<CompleteData> {
     );
   }
 
+  void dropDownFun(String? levelSelected) {
+    if (levelSelected is String) {
+      setState(() {
+        _dropDownValue = levelSelected;
+      });
+    }
+  }
+
   bool _validation() {
     return true;
   }
 
   Future<void> _saveDataAndNavigteToDashBoard() async {
     //save to firebase and provider
-    await _saveInformationToFireBase().then((value){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage(),));
+    await _saveInformationToFireBase().then((value) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainPage(),
+          ));
     });
     //go to dashboard
   }
 
   Future<void> _saveInformationToFireBase() async {
-    Map<String,dynamic> map = Map();
-    
+    Map<String, dynamic> map = Map();
+
     map['firstName'] = firstNameController.text;
     map['lastName'] = lastNameController.text;
     map['phone'] = phoneController.text;
-    if(google){
-      map['id'] =  FirebaseAuth.instance.currentUser?.uid;
+    if (google) {
+      map['id'] = FirebaseAuth.instance.currentUser?.uid;
       map['email'] = FirebaseAuth.instance.currentUser?.email;
-    }else{
-      await _SignInWithEmailAndPassword(emailController.text,passwordController.text).then((value){
+    } else {
+      await _SignInWithEmailAndPassword(
+              emailController.text, passwordController.text)
+          .then((value) {
         map['id'] = FirebaseAuth.instance.currentUser?.uid;
         print("sssssssssssssssss ${FirebaseAuth.instance.currentUser?.uid}");
         map['email'] = emailController.text;
       });
     }
-    if(isdoctor){
-      map['master'] = masterController.text;
+    if (isdoctor) {
+      map['master'] = masters;
       map['type'] = 1;
-    }else{
+    } else {
       map['studentId'] = iDController.text;
-      map['level'] = levelController.text;
+      map['level'] = _dropDownValue;
       map['type'] = 0;
       map['courses'] = [];
     }
 
     //save data
 
-    await FirebaseFirestore.instance.collection("Users").doc("${map['id']}").set(map).then((value){
-        Globals.user = map;
-        if(isdoctor){
-          Globals.typeOfUsers = 1;
-        }else{
-          Globals.typeOfUsers = 0;
-        }
-        Globals.currentScreen = 0;
-        Globals.currentScreenIndex = 0;
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc("${map['id']}")
+        .set(map)
+        .then((value) {
+      Globals.user = map;
+      if (isdoctor) {
+        Globals.typeOfUsers = 1;
+      } else {
+        Globals.typeOfUsers = 0;
+      }
+      Globals.currentScreen = 0;
+      Globals.currentScreenIndex = 0;
     });
   }
 
-  Future<void> _SignInWithEmailAndPassword(String emailAddress, String password) async {
+  Future<void> _SignInWithEmailAndPassword(
+      String emailAddress, String password) async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
@@ -332,3 +399,4 @@ class _CompleteDataState extends State<CompleteData> {
     }
   }
 }
+
