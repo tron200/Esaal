@@ -35,9 +35,9 @@ class _State extends State<Chat> {
   _initializer() async {
     //get questons debend on type of user
     //me = await FirebaseAuth.instance.currentUser!.displayName!;
-    courseName = Globals.courseName;
-    courseFullName = Globals.courseFullName;
-    courseId = Globals.courseId;
+    courseName = Globals.choosedCourse.name.substring(0,2).toUpperCase();
+    courseFullName = Globals.choosedCourse.name;
+    courseId = Globals.choosedCourse.id;
     me = "${Globals.user['firstName']} ${Globals.user['lastName']}";
     questions = [];
     await _getQuestionsData();
@@ -257,7 +257,7 @@ class _State extends State<Chat> {
                         ],
                       ),
                     ):Container(),
-                    (typeOfUser == 1 && !Globals.admittedAnswer)?Container(
+                    (typeOfUser == 1 && !Globals.admittedAnswer && answers.length != 0)?Container(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ButtonStyle(
@@ -267,7 +267,18 @@ class _State extends State<Chat> {
                           backgroundColor: MaterialStatePropertyAll(Color(0xff49A078),)
                         ),
                           onPressed: (){
+                          bool admit = false;
+                          for(int i = 0; i< answers.length; i++){
+                            if(answers[i].checkBoxValue){
+                              admit = true;
+                              break;
+                            }
+                          }
+                          if(admit) {
                             AdmitAnswers(QuestionId);
+                          }else{
+                            //no answers to add
+                          }
                           },
                           child: Padding(
                             padding:  EdgeInsets.symmetric(vertical: 10.0),

@@ -1,4 +1,5 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:es2al/Courses/CourseInfo.dart';
 import 'package:es2al/chat/data/Globals.dart';
 import 'package:es2al/chat/model/Course.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -138,27 +139,34 @@ class _CoursesState extends State<Courses> {
   }
 
   Coure(Course course) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      width: double.infinity,
-      height: 120,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50)
-        ),
-        elevation: 3,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            FittedBox(
-              fit: BoxFit.fill,
-              child: Image.asset('assets/images/course.png'),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 15),
-              child: Text(Globals.typeOfUsers == 0?"${course.name}":"${course.name} #${course.code}",style: TextStyle(color: Colors.white,fontSize: 25, fontWeight: FontWeight.w900),),
-            )
-          ],
+    return GestureDetector(
+      onTap: () {
+        Globals.choosedCourse = course;
+        Globals.currentScreen = Globals.routeToCourseInfo;
+        widget.update();
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        width: double.infinity,
+        height: 120,
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50)
+          ),
+          elevation: 3,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              FittedBox(
+                fit: BoxFit.fill,
+                child: Image.asset('assets/images/course.png'),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 15),
+                child: Text("${course.name}",style: TextStyle(color: Colors.white,fontSize: 25, fontWeight: FontWeight.w900),),
+              )
+            ],
+          ),
         ),
       ),
     );

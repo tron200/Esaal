@@ -164,11 +164,11 @@ class _CompleteDataState extends State<CompleteData> {
                                child: DropdownButton(
                                  underline: null,
                                  items: const [
-                                    DropdownMenuItem(value: "Masters As",child: Text("Masters AS"),),
-                                    DropdownMenuItem(value: "Masters Hy",child: Text("Masters HY"),),
-                                    DropdownMenuItem(value: "Masters DS",child: Text("Masters DS"),),
-                                    DropdownMenuItem(value: "Masters GR",child: Text("Masters GR"),),
-                                    DropdownMenuItem(value: "Masters RF",child: Text("Masters RF"),),
+                                    DropdownMenuItem(value: "As",child: Text("AS"),),
+                                    DropdownMenuItem(value: "BS",child: Text("BS"),),
+                                    DropdownMenuItem(value: "MS",child: Text("MS"),),
+                                    DropdownMenuItem(value: "M.D",child: Text("M.D"),),
+                                    DropdownMenuItem(value: "PhD",child: Text("PhD"),),
                                   ],
                                  isExpanded: true,
                                  hint: const Text("Select Masters"),
@@ -187,16 +187,16 @@ class _CompleteDataState extends State<CompleteData> {
                                 child: DropdownButton(
                                   items: const [
                                     DropdownMenuItem(
-                                        value: "Level 1",
+                                        value: "1",
                                         child: Text("level 1")),
                                     DropdownMenuItem(
-                                        value: "level 2",
+                                        value: "2",
                                         child: Text("level 2")),
                                     DropdownMenuItem(
-                                        value: "level 3",
+                                        value: "3",
                                         child: Text("level 3")),
                                     DropdownMenuItem(
-                                        value: "level 4",
+                                        value: "4",
                                         child: Text("level 4")),
                                   ],
                                   iconSize: 30,

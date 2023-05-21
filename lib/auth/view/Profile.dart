@@ -1,3 +1,4 @@
+import 'package:es2al/intro/Instructions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,14 +20,25 @@ class _ProfileState extends State<Profile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 15, 0, 0),
-            alignment: Alignment.bottomLeft,
-            child: const Text(
-              "Profile",
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
-            ),
+          Row(
+            children: [
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+
+                   child :const Text(
+                      "Profile",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
+                    ),
+    ),
+                  Expanded(child: SizedBox()),
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions(),)),
+                    child: Text("Go to instructions",style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                  )
+            ],
           ),
           const SizedBox(
             height: 10,

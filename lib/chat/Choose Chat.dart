@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'data/Globals.dart';
+import 'model/Course.dart';
 
 class ChooseChat extends StatefulWidget {
   Function update;
@@ -173,9 +174,7 @@ class _ChooseChatState extends State<ChooseChat> {
                                       backgroundColor: MaterialStatePropertyAll(Color(0xff124559))
                                   ),
                                   onPressed: (){
-                                    Globals.courseName = Courses[index].value['name'].toString().substring(0,2);
-                                    Globals.courseFullName = Courses[index].value['name'];
-                                    Globals.courseId = Courses[index].value['id'];
+                                    Globals.choosedCourse = Course.fromJson(Courses[index].value, [], []);
                                     Globals.currentScreen = Globals.routeToChat;
                                     Globals.admittedAnswer = true;
                                     widget.update();
@@ -189,9 +188,7 @@ class _ChooseChatState extends State<ChooseChat> {
                                       backgroundColor: MaterialStatePropertyAll(Color(0xff124559))
                                   ),
                                   onPressed: (){
-                                     Globals.courseName = Courses[index].value['name'].toString().substring(0,2);
-                                     Globals.courseFullName = Courses[index].value['name'];
-                                     Globals.courseId = Courses[index].value['id'];
+                                    Globals.choosedCourse = Course.fromJson(Courses[index].value, [], []);
                                       Globals.currentScreen = Globals.routeToChat;
                                      Globals.admittedAnswer = false;
                                       widget.update();

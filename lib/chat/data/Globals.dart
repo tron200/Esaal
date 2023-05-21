@@ -1,3 +1,5 @@
+import '../model/Course.dart';
+
 class Globals{
   static int typeOfUsers = 1; // 0 student    1: teacher
   static int currentScreenIndex = 1;
@@ -6,6 +8,8 @@ class Globals{
   static const int routeToIdle = 0;
   static const int routeToCreateCourse = 1;
   static const int routeToChat = 1;
+  static const int routeToCourseInfo = 2;
+  static Course choosedCourse = Course("", "");
 
   //temps
 static String courseName = "",courseFullName = "";
