@@ -1,3 +1,4 @@
+import 'package:es2al/auth/view/Profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,12 +39,20 @@ class Instructions extends StatelessWidget {
         padding: EdgeInsets.only(top: 20),
           child: ListView(
             children: [
+
               Padding(
-                  padding:EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Instructions",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  ),
+                padding: const EdgeInsets.only(left: 15),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: (){ Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile(),));},
+                        icon: const  Icon(Icons.arrow_back_ios)),
+                    const Text(
+                        "Instructions",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 15,

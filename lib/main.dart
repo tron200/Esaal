@@ -1,9 +1,13 @@
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:es2al/Courses/CourseInfo.dart';
 import 'package:es2al/MainPage/MainPage.dart';
+import 'package:es2al/auth/view/Profile.dart';
+import 'package:es2al/auth/view/Signup/Complete%20Data.dart';
 import 'package:es2al/auth/view/Signup/Sign%20Up.dart';
 import 'package:es2al/chat/chat.dart';
+import 'package:es2al/dashBord.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -13,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'auth/view/Forgot Password/ForgotPassword.dart';
 import 'auth/view/Login/Login.dart';
 import 'chat/data/Globals.dart';
+
 import 'firebase_options.dart';
 import 'intro/Instructions.dart';
 import 'intro/intro.dart';
@@ -59,7 +64,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: Intro(),
+      // home: Profile(),
       home: x,
     );
   }

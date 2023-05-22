@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
           body: SafeArea(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -163,3 +163,31 @@ class _MainPageState extends State<MainPage> {
 
 
 }
+
+// Scaffold(
+// body: SafeArea(
+// child: Container(
+// decoration: const BoxDecoration(
+// gradient: LinearGradient(
+// begin: Alignment.topLeft,
+// end: Alignment.bottomRight,
+// colors: [
+// Colors.white,
+// Color(0xff124559),
+// ],
+// )
+// ),
+// child: Container(
+// padding: EdgeInsets.all(12),
+// child: Column(
+// children: [
+// Expanded(child:
+// _ChoosePage()
+// ),
+// _buildFloatingBar()
+// ],
+// ),
+// ),
+// ),
+// ),
+// ),
