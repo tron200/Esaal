@@ -45,7 +45,9 @@ class Instructions extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                        onPressed: (){ Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile(),));},
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
                         icon: const  Icon(Icons.arrow_back_ios)),
                     const Text(
                         "Instructions",

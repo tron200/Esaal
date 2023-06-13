@@ -44,7 +44,7 @@ class _CourseInfoState extends State<CourseInfo> {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       decoration:  BoxDecoration(
                         gradient:const LinearGradient(
                           colors: [Color(0xffFFFFFF),Color(0xff537989)],
@@ -56,9 +56,14 @@ class _CourseInfoState extends State<CourseInfo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:  [
-                          Text("   ${widget.courseName.substring(0,2).toUpperCase()}", style: TextStyle(color: Color(0xff49A078),fontWeight: FontWeight.bold, fontSize: 13),),
-                          SizedBox(height: 5,),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 35),
+                            child: Text("   ${widget.courseName.substring(0,2).toUpperCase()}", style: TextStyle(color: Color(0xff49A078),fontWeight: FontWeight.bold, fontSize: 13),),
+                          ),
+                          SizedBox(height: 20,),
                           Row(
+
                             children: [
                               ElevatedButton(
                                   onPressed: (){

@@ -2,6 +2,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:es2al/Courses/CourseInfo.dart';
 import 'package:es2al/Courses/CreateCourse.dart';
 import 'package:es2al/chat/Choose%20Chat.dart';
+import 'package:es2al/dashBord.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -110,6 +111,15 @@ class _MainPageState extends State<MainPage> {
 
   _ChoosePage(){
     switch(Globals.currentScreenIndex){
+
+      case 0:
+        switch(Globals.currentScreen){
+          case Globals.routeToIdle:
+            return DashBoard(update);
+
+        }
+        break;
+
       case 1:
         switch(Globals.currentScreen){
           case Globals.routeToIdle:

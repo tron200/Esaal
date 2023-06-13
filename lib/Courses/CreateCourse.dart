@@ -151,9 +151,13 @@ class _CreateCourseState extends State<CreateCourse> {
   }
 
   Future<void> addCourse(Course course) async {
+    print(course.id);
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/${course.id}");
     ref.keepSynced(true);
-    await ref.set(course.toJson());
+    print(course.toJson());
+    await ref.set(course.toJson()).then((value){
+      print("Done");
+    });
     print(course.toJson());
   }
 
