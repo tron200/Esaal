@@ -21,7 +21,6 @@ class _CoursesState extends State<Courses> {
   TextEditingController controller = TextEditingController();
   @override
   void initState() {
-    print("inittttttttttttttttttttttttt");
     _getCourses().then((value){
       widget.update;
     });

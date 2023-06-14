@@ -15,35 +15,28 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    print(Globals.typeOfUsers);
     bool isStudent = Globals.typeOfUsers == 0?true:false;
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-
-                   child :const Text(
-                      "Profile",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
-                    ),
-    ),
-                  Expanded(child: SizedBox()),
-                  GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions(),)),
-                    child: Text("Go to instructions",style: TextStyle(
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),),
+                ),
+                const Expanded(child: SizedBox()),
+                GestureDetector(
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions(),)),
+                  child: Text("Go to instructions",style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-                  )
-            ],
+                )
+              ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Stack(
+            const SizedBox(height: 10),
+            Stack(
             children: [
               Container(
                 width: 100,
@@ -68,25 +61,17 @@ class _ProfileState extends State<Profile> {
                   )),
             ],
           ),
-          const SizedBox(
+            const SizedBox(
             height: 10,
           ),
-          ////////////////////
-          _buildElement(
-            Image(image: AssetImage("assets/images/personalcard.png") ),
-            "Name",
-            "${Globals.user['firstName']} ${Globals.user['lastName']}",
-          AssetImage("assets/images/useredit.png")),
-
-          Globals.typeOfUsers == 0?_buildElement(Icon(Icons.account_circle_outlined,color: Colors.white,), "ID", "${Globals.user['studentId']}", AssetImage("assets/images/useredit.png",)):Container(),
-          _buildElement(Icon(Icons.phone_enabled, color: Colors.white,), "Phone", "${Globals.user['phone']}", AssetImage("assets/images/useredit.png",)),
-
-          isStudent?
-          _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",))
-              : _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Master’s Specialization", "Master’s : ${Globals.user['master']}", AssetImage("assets/images/useredit.png",)),
-
-          _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",)),
-          ElevatedButton(
+            _buildElement(Image(image: AssetImage("assets/images/personalcard.png") ), "Name", "${Globals.user['firstName']} ${Globals.user['lastName']}", AssetImage("assets/images/useredit.png")),
+            Globals.typeOfUsers == 0?_buildElement(Icon(Icons.account_circle_outlined,color: Colors.white,), "ID", "${Globals.user['studentId']}", AssetImage("assets/images/useredit.png",)):Container(),
+            _buildElement(Icon(Icons.phone_enabled, color: Colors.white,), "Phone", "${Globals.user['phone']}", AssetImage("assets/images/useredit.png",)),
+            isStudent?
+            _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",)):
+            _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Master’s Specialization", "Master’s : ${Globals.user['master']}", AssetImage("assets/images/useredit.png",)),
+            _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",)),
+            ElevatedButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut().then((value){
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login(),));
@@ -102,10 +87,10 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(10.0),
                 child: const Text("Log out", style: TextStyle(color: Colors.white, fontSize: 16, ),),
               )),
-          SizedBox(height:15,)
-        ],
-      ),
-    );
+            SizedBox(height:15,)
+          ],
+        ),
+      );
   }
 
   Widget _buildElement(Widget leading,String title, String content, AssetImage img){

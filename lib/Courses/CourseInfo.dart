@@ -23,7 +23,17 @@ class _CourseInfoState extends State<CourseInfo> {
           color: Colors.transparent,
           child: ListView(
             children:[
-              Text("Welcome to ${widget.courseName} course", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: (){
+                      Globals.currentScreen= Globals.routeToIdle;
+                      widget.update();
+                      },
+                      icon: const  Icon(Icons.arrow_back_ios)),
+                  Text("Welcome to ${widget.courseName} course", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                ],
+              ),
               SizedBox(height: 20,),
               SizedBox(
                 height: 110,

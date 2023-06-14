@@ -8,6 +8,7 @@ import 'package:es2al/auth/view/Signup/Complete%20Data.dart';
 import 'package:es2al/auth/view/Signup/Sign%20Up.dart';
 import 'package:es2al/chat/chat.dart';
 import 'package:es2al/dashBord.dart';
+import 'package:es2al/studentCoursInfo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';

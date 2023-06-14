@@ -11,8 +11,10 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBordState extends State<DashBoard> {
+
   @override
   Widget build(BuildContext context) {
+    bool isStudent = Globals.typeOfUsers == 1?true:false;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -28,6 +30,7 @@ class _DashBordState extends State<DashBoard> {
         child: ListView(
           children: [
             const Text("Dashboard", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+            isStudent? SizedBox(): Image(image: AssetImage("assets/images/teacherDashbord.png")),
             const SizedBox(height: 10,),
             Padding(
              padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -59,9 +62,9 @@ class _DashBordState extends State<DashBoard> {
                          Text(
                              "${Globals.user['email']}",
                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                         Text(
+                         Globals.typeOfUsers==0? Text(
                              "${Globals.user['studentId']}",
-                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)):const Text(""),
                        ],
                      ),
                    ),
@@ -104,9 +107,47 @@ class _DashBordState extends State<DashBoard> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
+            isStudent? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10,),
+                const Text("Bonus", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                const SizedBox(height: 10,),
+                _createElement("Java", 5),
+              ],
+            ): Container(),
           ],
         ),
       ),
     );
   }
+
+  Widget _createElement (String courseName, int  bonus,  ){
+    return Padding(
+      padding:EdgeInsets.symmetric(horizontal: 20),
+      child:  Container(
+        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+        decoration:  const BoxDecoration(
+            color: Color(0xff124559),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(5),
+              topRight: Radius.circular(5),
+              bottomLeft: Radius.circular(5),
+              bottomRight: Radius.circular(20),
+            )
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(courseName, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+            Expanded(child: SizedBox(),),
+            Text(bonus==0? "-":"+$bonus", style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+          ],
+        ),
+      ),
+    );
+  }
+
+
 }
