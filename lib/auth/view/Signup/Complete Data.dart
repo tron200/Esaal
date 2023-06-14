@@ -200,8 +200,8 @@ class _CompleteDataState extends State<CompleteData> {
                                         child: Text("level 4")),
                                   ],
                                   iconSize: 30,
-                                  value: _dropDownValue!.isEmpty
-                                      ? null
+                                  value: _dropDownValue==null
+                                      ? "1"
                                       : _dropDownValue,
                                   hint: const Text(
                                     "Select level",

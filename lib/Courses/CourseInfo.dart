@@ -1,4 +1,5 @@
- import 'package:flutter/cupertino.dart';
+ import 'package:es2al/studentCoursInfo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../chat/data/Globals.dart';
@@ -43,7 +44,11 @@ class _CourseInfoState extends State<CourseInfo> {
                 ),
               ),
               SizedBox(height: 20,),
-              _CreateElement("Students enrolled", "${widget.studentNumbers}"),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseInfo(),));
+                },
+                  child: _CreateElement("Students enrolled", "${widget.studentNumbers}")),
               SizedBox(height: 20,),
               _CreateElement("course name", "${widget.courseName}"),
               SizedBox(height: 20,),

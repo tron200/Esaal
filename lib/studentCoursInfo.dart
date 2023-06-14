@@ -1,10 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' ;
 import '../../chat/data/Globals.dart';
 
 import '../../../MainPage/MainPage.dart';
-class StudentCourseInfo extends StatelessWidget {
-  const StudentCourseInfo({Key? key}) : super(key: key);
+
+class StudentCourseInfo extends StatefulWidget{
+
+
+    // TODO: implement createState
+    @override
+    State<StudentCourseInfo> createState() => _StudentCourseInfo();
+
+
+
+}
+class _StudentCourseInfo extends State<StudentCourseInfo> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +38,9 @@ class StudentCourseInfo extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            IconButton(icon: const  Icon(Icons.arrow_back_ios), onPressed: (){},),
+            IconButton(icon: const  Icon(Icons.arrow_back_ios), onPressed: (){
+              Navigator.pop(context);
+            },alignment: Alignment.centerLeft),
             const Text("Java Students", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),),
             const SizedBox(height: 5,),
             const Text(
@@ -73,4 +93,22 @@ class StudentCourseInfo extends StatelessWidget {
       ],
     );
   }
+
+  Future<void> _getData() async {
+    final ref = FirebaseFirestore.instance.collection("Users");
+    await ref.where("type" ,isEqualTo: 0).get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.where((student){
+        if(((student.data() as dynamic)['courses'] as List).contains(Globals.choosedCourse.id)){
+          return true;
+        }else{
+          return false;
+        }
+      }).forEach((doc) {
+        print(doc.id);
+      });
+    });
+  }
+
+
 }
