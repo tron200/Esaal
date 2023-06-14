@@ -19,8 +19,8 @@ class CompleteData extends StatefulWidget {
 class _CompleteDataState extends State<CompleteData> {
   late bool isdoctor;
   late bool google;
-  String _dropDownValue = "Level 1";
-  String masters = "";
+  String _dropDownValue = "1";
+  String masters = "As";
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -172,7 +172,7 @@ class _CompleteDataState extends State<CompleteData> {
                                   ],
                                  isExpanded: true,
                                  hint: const Text("Select Masters"),
-                                 value:  masters!.isEmpty? null : masters,
+                                 value:  masters,
                                  onChanged: (String? masterSelect){
                                    if(masterSelect is String){ setState(() { masters = masterSelect;});}
                                  },
@@ -200,9 +200,7 @@ class _CompleteDataState extends State<CompleteData> {
                                         child: Text("level 4")),
                                   ],
                                   iconSize: 30,
-                                  value: _dropDownValue==null
-                                      ? "1"
-                                      : _dropDownValue,
+                                  value: _dropDownValue,
                                   hint: const Text(
                                     "Select level",
                                     style: TextStyle(fontSize: 15),
