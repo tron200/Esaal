@@ -19,6 +19,7 @@ class _CreateCourseState extends State<CreateCourse> {
   late String title;
   late String hint;
   late String button;
+  late bool isStudent;
   TextEditingController _controller = TextEditingController();
 
   @override
@@ -28,14 +29,27 @@ class _CreateCourseState extends State<CreateCourse> {
         title = "Enroll Course";
         hint = "Course Code";
         button = "Enroll";
+        isStudent = true;
         break;
       case 1: //Doctor
         title = "Create Course";
         hint = "Course Name";
         button = "Create";
+        isStudent = false;
     }
 
     super.initState();
+  }
+
+  Future<void> addCourse(Course course) async {
+    print(course.id);
+    DatabaseReference ref = FirebaseDatabase.instance.ref("subs/${course.id}");
+    ref.keepSynced(true);
+    print(course.toJson());
+    await ref.set(course.toJson()).then((value){
+      print("Done");
+    });
+    print(course.toJson());
   }
 
   @override
@@ -53,11 +67,9 @@ class _CreateCourseState extends State<CreateCourse> {
                   widget.update();
                 },
                 child: Icon(Icons.arrow_back_ios)),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             //create Course
-            Text("$title")
+            Text(title, style: TextStyle( fontSize: 16))
           ]),
           Expanded(
             child: SingleChildScrollView(
@@ -73,68 +85,83 @@ class _CreateCourseState extends State<CreateCourse> {
                   Container(
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                        color: Color(0xff7594a1),
+                        // gradient: const LinearGradient(colors: [
+                        //   Color.fromRGBO(217, 217, 217, 0.6),
+                        //   Color.fromRGBO(217, 217, 217, 0.4),
+                        // ]),
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(color: Colors.white24, spreadRadius: 1.5)
                         ]),
                     width: double.infinity,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //course
+                        Text("    You’re currently signed in as  ", textAlign: TextAlign.start ,style: TextStyle( fontSize: 17, fontWeight: FontWeight.w500),),
+                       SizedBox(height: 5,),
+                        ListTile(
+                          leading: Image(image: AssetImage(isStudent? "assets/images/studentImage.png":"assets/images/teacherImage.png")),
+                          title: Text("${Globals.user['firstName']} ${Globals.user['lastName']}"),
+                          subtitle: Text(Globals.user['email']),
+                        ),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: EdgeInsets.symmetric(vertical: 20),
                           width: double.infinity,
                           child: TextField(
                             controller: _controller,
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(width: 1.5,color: Color(0xff124559)),
+                                ) ,
                                 hintText: hint,
-                                hintStyle: TextStyle(color: Colors.black),
+                                hintStyle: TextStyle(color: Color(0xff124559), fontFamily: "Poppins")  ,
                                 filled: true,
-                                fillColor: Color(0xffd9d9d9)),
+                                fillColor: Color(0xffD9D9D9)),
                           ),
                         ),
-                        ElevatedButton(
-                            onPressed: () async {
-                              if (_controller.text.isNotEmpty) {
-                                if (Globals.typeOfUsers == 1) {
-                                  await addCourse(Course(
-                                      _controller.text, Globals.user['id']))
-                                      .then((value) {
-                                    //inform user
+                        Center(
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                if (_controller.text.isNotEmpty) {
+                                  if (Globals.typeOfUsers == 1) {
+                                    await addCourse(Course(
+                                        _controller.text, Globals.user['id']))
+                                        .then((value) {
+                                      //inform user
 
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content:
-                                      Text("${_controller.text} Added !"),
-                                    ));
-                                    //return to idle
-                                    Globals.currentScreen = Globals.routeToIdle;
-                                    widget.update();
-                                  });
-                                } else {
-                                  await enrollCourse(_controller.text).then((value){
-                                    Globals.currentScreen = Globals.routeToIdle;
-                                    widget.update();
-                                    setState(() {
-
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                        Text("${_controller.text} Added !"),
+                                      ));
+                                      //return to idle
+                                      Globals.currentScreen = Globals.routeToIdle;
+                                      widget.update();
                                     });
-                                  });
+                                  } else {
+                                    await enrollCourse(_controller.text).then((value){
+                                      Globals.currentScreen = Globals.routeToIdle;
+                                      widget.update();
+                                      setState(() {
+
+                                      });
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll(Color(0xff124559)),
-                                elevation: MaterialStatePropertyAll(7),
-                                shape: MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)))),
-                            child: Text("  $button  ")),
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStatePropertyAll(Color(0xff124559)),
+                                  elevation: MaterialStatePropertyAll(7),
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(10)))),
+                              child: Text("  $button  ")),
+                        ),
                       ],
                     ),
                   ),
@@ -148,17 +175,6 @@ class _CreateCourseState extends State<CreateCourse> {
         ],
       ),
     );
-  }
-
-  Future<void> addCourse(Course course) async {
-    print(course.id);
-    DatabaseReference ref = FirebaseDatabase.instance.ref("subs/${course.id}");
-    ref.keepSynced(true);
-    print(course.toJson());
-    await ref.set(course.toJson()).then((value){
-      print("Done");
-    });
-    print(course.toJson());
   }
 
   Future<void> enrollCourse(String courseCode) async {

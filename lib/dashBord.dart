@@ -14,7 +14,7 @@ class _DashBordState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    bool isStudent = Globals.typeOfUsers == 1?true:false;
+    bool isStudent = Globals.typeOfUsers == 0?true:false;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -30,7 +30,7 @@ class _DashBordState extends State<DashBoard> {
         child: ListView(
           children: [
             const Text("Dashboard", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-            isStudent? SizedBox(): Image(image: AssetImage("assets/images/teacherDashbord.png")),
+            isStudent? SizedBox():Image(image: AssetImage("assets/images/teacherDashbord.png")),
             const SizedBox(height: 10,),
             Padding(
              padding: const EdgeInsets.symmetric(horizontal: 30),

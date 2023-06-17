@@ -37,6 +37,7 @@ class _CoursesState extends State<Courses> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("  Courses",style: TextStyle(fontSize: 30,color: Color(0xff537989),fontWeight: FontWeight.bold),),
+                    SizedBox(height: 5,),
                     Expanded(
                         child: Container(
                           padding: EdgeInsets.all(15),
@@ -66,6 +67,7 @@ class _CoursesState extends State<Courses> {
                                   prefixIcon: Icon(Ionicons.ios_search)
                                 ),
                               ),
+                              SizedBox(height: 10,),
                               //course
                               Expanded(
                                   child: ListView.builder(
@@ -87,7 +89,7 @@ class _CoursesState extends State<Courses> {
                       padding: const EdgeInsets.only(left: 15,top: 10),
                       child: Row(
                         children: [
-                          Text(Globals.typeOfUsers == 1?"Create a new course":"Enroll a new couse",style: TextStyle(color: Colors.white),),
+                          Text(Globals.typeOfUsers == 1?"Create a new course":"Enroll a new course",style: TextStyle(color: Colors.white, fontSize: 15),),
                           Expanded(
                               child: Container()
                           ),
@@ -158,7 +160,7 @@ class _CoursesState extends State<Courses> {
             children: [
               FittedBox(
                 fit: BoxFit.fill,
-                child: Image.asset('assets/images/course.png'),
+                child: Image.asset("assets/images/course3.png"),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 15),
@@ -170,5 +172,4 @@ class _CoursesState extends State<Courses> {
       ),
     );
   }
-
 }
