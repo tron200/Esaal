@@ -186,7 +186,8 @@ class _CreateCourseState extends State<CreateCourse> {
                     Globals.user['id'].toString()
                   ];
                   await course.update({
-                    'students': students
+                    'students': students,
+                    '${Globals.user['id']}':0,
                   });
                   // add course Id to Student
                   var ref = FirebaseFirestore.instance.collection("Users").doc(
@@ -195,7 +196,8 @@ class _CreateCourseState extends State<CreateCourse> {
                     List courses = value.data()!['courses'];
                     courses.add(CourseId);
                     await ref.update({
-                      'courses': courses
+                      'courses': courses,
+                      '$CourseId':0,
                     });
                   });
 

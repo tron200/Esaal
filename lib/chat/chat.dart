@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:es2al/chat/model/question.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -275,7 +276,7 @@ class _State extends State<Chat> {
                             }
                           }
                           if(admit) {
-                            AdmitAnswers(QuestionId);
+                            AdmitAnswers(QuestionId,index);
                           }else{
                             //no answers to add
                           }
@@ -369,7 +370,7 @@ class _State extends State<Chat> {
 
   AddAnswer(int index, int questionId){
     if(answerControllers[index].text.isNotEmpty) {
-          setAnswerToQuestion(AnswerModel(me, questionId ,answerControllers[index].text, false));
+          setAnswerToQuestion(AnswerModel(me,Globals.user['id'], questionId ,answerControllers[index].text, false));
       answerControllers[index].clear();
       disappearKeyboard();
     }
@@ -418,7 +419,7 @@ class _State extends State<Chat> {
     );
   }
 
-  AdmitAnswers(int questionId) async {
+  AdmitAnswers(int questionId,index) async {
     //go to question change it is status to 1
     DatabaseReference ref = FirebaseDatabase.instance.ref("subs/$courseId/questions/$questionId");
     ref.keepSynced(true);
@@ -428,6 +429,34 @@ class _State extends State<Chat> {
         }
     );
     //remove all un cheacked answers
+    // add bouns
+    List<String> students =[];
+    for(int i =0; i<questions[index].answers.length;i++){
+      if(questions[index].answers[i].checkBoxValue && !students.contains(questions[index].answers[i].ownerId)){
+        students.add(questions[index].answers[i].ownerId);
+      }
+    }
+    // add bouns to these ids
+      // 1- add bouns to each students
+      for(int i = 0; i < students.length;i++){
+        int bouns = 0;
+        var ref = await FirebaseFirestore.instance.collection("Users").doc(students[i]).get().then((value) async {
+          var data = (value.data() as dynamic);
+          bouns = data['${Globals.choosedCourse.id}'] +1;
+          await FirebaseFirestore.instance.collection("Users").doc(students[i]).update(
+              {
+                '${Globals.choosedCourse.id}': bouns
+              });
+        });
+
+        // 2- add bouns to course
+        await FirebaseDatabase.instance.ref('subs/${Globals.choosedCourse.id}').update({
+          '${students[i]}': bouns
+        });
+      }
+
+
+
   }
 
 

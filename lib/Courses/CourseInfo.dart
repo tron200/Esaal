@@ -1,4 +1,6 @@
- import 'package:es2al/studentCoursInfo.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:es2al/studentCoursInfo.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,12 @@ class CourseInfo extends StatefulWidget {
 }
 
 class _CourseInfoState extends State<CourseInfo> {
+  List<dynamic> Students=[];
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,9 +54,11 @@ class _CourseInfoState extends State<CourseInfo> {
               SizedBox(height: 20,),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseInfo(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseInfo(Students),)).then((value){
+                    _getData();
+                  });
                 },
-                  child: _CreateElement("Students enrolled", "${widget.studentNumbers}")),
+                  child: _CreateElement("Students enrolled", "${Students.length}")),
               SizedBox(height: 20,),
               _CreateElement("course name", "${widget.courseName}"),
               SizedBox(height: 20,),
@@ -173,6 +183,27 @@ class _CourseInfoState extends State<CourseInfo> {
           ],
       ),
     );
+  }
+
+  Future<void> _getData() async {
+    final ref = FirebaseFirestore.instance.collection("Users");
+    List temp =[];
+    await ref.where("type" ,isEqualTo: 0).get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.where((student){
+        if(((student.data() as dynamic)['courses'] as List).contains(Globals.choosedCourse.id)){
+          return true;
+        }else{
+          return false;
+        }
+      }).forEach((doc) {
+          temp.add(doc.data());
+      });
+      Students = temp;
+      setState(() {
+
+      });
+    });
   }
 
 }
