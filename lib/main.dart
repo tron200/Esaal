@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:es2al/Courses/CourseInfo.dart';
+import 'package:es2al/Courses/CourseInfoSt.dart';
 import 'package:es2al/MainPage/MainPage.dart';
 import 'package:es2al/auth/view/Profile.dart';
 import 'package:es2al/auth/view/Signup/Complete%20Data.dart';

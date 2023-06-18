@@ -42,9 +42,15 @@ class _DashBordState extends State<DashBoard> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Dashboard", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-              isStudent? SizedBox(): Image(image: AssetImage("assets/images/teacherDashbord.png")),
-              const SizedBox(height: 10,),
+              const Text("Dashboard", style: TextStyle(color: Color(0xff537989), fontFamily: "Times New Roman", fontSize: 30, fontWeight: FontWeight.bold),),
+              isStudent? SizedBox()
+                  : Row(
+                    children: [
+                      Expanded(child: SizedBox()),
+                      Image(image: AssetImage("assets/images/teacherDashbord.png"))
+                    ],
+              ),
+              const SizedBox(height: 20,),
               Padding(
                padding: const EdgeInsets.symmetric(horizontal: 30),
                child:  Container(
@@ -82,34 +88,48 @@ class _DashBordState extends State<DashBoard> {
                ),
              ),
               const SizedBox(height: 10,),
-              GestureDetector(
-                onTap: (){
-                  Globals.currentScreenIndex = 2;
-                  Globals.currentScreen = Globals.routeToIdle;
-                  widget.update();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   child: Container(
-                    padding: const EdgeInsets.only(top: 30, left: 25,bottom: 30),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 15, left: 20),
                     decoration: BoxDecoration(
                         color: const Color(0xff537989),
                         borderRadius: BorderRadius.circular(25)
                     ),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("My Courses", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                          Text("press on a course button to get course chat", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),),
+                        children:  [
+                           Text("My Courses", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
+                          SizedBox(height: 4),
+                          Text("press on a course button to get course info ", style: TextStyle(color: Colors.white, fontSize: 10),),
+                           SizedBox(height: 20,),
+                          // // add courses to go course info
+                          // SingleChildScrollView(
+                          //   scrollDirection: Axis.vertical,
+                          //   child:   Row(
+                          //
+                          //     children: [
+                          //       SizedBox(width: 10,),
+                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                          //       SizedBox(width: 20,),
+                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                          //       SizedBox(width: 20,),
+                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                          //
+                          //     ],
+                          //   ),
+                          // ),
+                          SizedBox(height: 50,)
 
                         ],
                       ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              isStudent?
-                  const SizedBox(height: 10,): Container(),
+
+
+              SizedBox(height: 10,),
               isStudent?const Text("Bonus", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),): Container(),
               isStudent?const SizedBox(height: 10,): Container(),
               isStudent && coursesNames.length > 0 ? Expanded(
@@ -133,6 +153,7 @@ class _DashBordState extends State<DashBoard> {
     return Padding(
       padding:EdgeInsets.symmetric(horizontal: 20),
       child:  Container(
+        margin: EdgeInsets.symmetric(vertical: 4),
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
         decoration:  const BoxDecoration(
             color: Color(0xff124559),
@@ -148,13 +169,23 @@ class _DashBordState extends State<DashBoard> {
           children: [
             Text(courseName, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
             Expanded(child: SizedBox(),),
-            Text(bonus==0? "-":"+$bonus", style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+            Text(bonus==0|| bonus== null? "-":"+$bonus", style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
           ],
         ),
       ),
     );
   }
+  Widget _createCourseB (String courseName, int  bonus){
 
+      return Container(
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.white, width: 1, )
+        ),
+        child: Text(courseName, style:  TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+      );
+  }
   Future<void> getData() async {
     print("object                  ${courses.length}");
     for(int i = 0; i < courses.length; i++){

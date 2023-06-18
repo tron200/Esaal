@@ -14,7 +14,7 @@ class Instructions extends StatelessWidget {
     String teacherChat2=
         "*  Bonus point will be added to the students who help their classmates with the correct answer.";
     String teacherBones =
-        "Bonus degrees will be added when the student participate in the answers of questions that asked in the course chat if your answer was correct and approved by your teacher...\n Good luck";
+        "Bonus degrees will be added when the student participate in the answers of questions that asked in the course chat if student's answer was correct and approved by teacher.";
     String studentChat1 =
         "*  EduScience chat allwos you to share your questions and It will be answered by one of your classmates or your teacher.";
     String studentChat2 =
@@ -51,7 +51,7 @@ class Instructions extends StatelessWidget {
                         icon: const  Icon(Icons.arrow_back_ios)),
                     const Text(
                         "Instructions",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Color(0xff537989)),
                       ),
                   ],
                 ),

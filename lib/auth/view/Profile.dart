@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
                 decoration: BoxDecoration(
                     color: Colors.red,
                     image: const DecorationImage(
-                        image: AssetImage("assets/images/test.jpg"),
+                        image: AssetImage("assets/images/userProfile.jpg"),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(50)),
               ),
