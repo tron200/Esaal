@@ -19,6 +19,7 @@ class CompleteData extends StatefulWidget {
 class _CompleteDataState extends State<CompleteData> {
   late bool isdoctor;
   late bool google;
+    bool isSecret = true;
   String _dropDownValue = "1";
   String masters = "As";
   TextEditingController firstNameController = TextEditingController();
@@ -243,14 +244,17 @@ class _CompleteDataState extends State<CompleteData> {
                             ? Container()
                             : TextFormField(
                                 controller: passwordController,
-                                obscureText: true,
+                                obscureText: isSecret,
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
-                                  suffixIcon: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                          Icons.remove_red_eye_outlined)),
+                                  suffixIcon:  IconButton(
+                                      onPressed: (){
+                                        isSecret= !isSecret;
+                                        setState((){});
+                                      },
+                                      icon: Icon(isSecret? Icons.visibility:Icons.visibility_off, color: Colors.black, )
+                                  ),
                                   hintText: "Password",
                                   hintStyle: const TextStyle(
                                       color: Color(0xff124559), fontSize: 15),

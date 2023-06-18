@@ -94,6 +94,7 @@ class _ChooseChatState extends State<ChooseChat> {
                               prefixIcon: Icon(Ionicons.ios_search)
                           ),
                         ),
+                        SizedBox(height: 15,),
                         //course
                         Expanded(
                             child: ListView.builder(
@@ -142,11 +143,11 @@ class _ChooseChatState extends State<ChooseChat> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                       colors: [
                         Colors.white,
-                        Color(0xff15475b)
+                        Color(0xff537989)
                       ]
                     )
                   ),
@@ -157,7 +158,7 @@ class _ChooseChatState extends State<ChooseChat> {
                       SizedBox(height: 22,),
                       Padding(
                         padding: const EdgeInsets.only(left: 80.0),
-                        child: Text("${Courses[index].value['name']}", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 25),),
+                        child: Text("${Courses[index].value['name']}", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
                       ),
                       SizedBox(height: 20,)
                       ,
@@ -210,7 +211,7 @@ class _ChooseChatState extends State<ChooseChat> {
                 shape: BoxShape.circle,
                 color: Color(0xff376274)
               ),
-              child: Text("${Courses[index].value['name'].toString().substring(0,2)}",style:TextStyle(color: Colors.greenAccent,shadows: [
+              child: Text("${Courses[index].value['name'].toString().substring(0,2).toUpperCase()}",style:TextStyle(color: Colors.greenAccent,shadows: [
       Shadow(color: Colors.yellow,blurRadius: 3)
       ],fontWeight: FontWeight.w900, fontSize: 20) ,),
             )

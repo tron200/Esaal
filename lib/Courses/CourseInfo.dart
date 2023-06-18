@@ -84,7 +84,7 @@ class _CourseInfoState extends State<CourseInfo> {
 
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 35),
-                            child: Text("   ${widget.courseName.substring(0,2).toUpperCase()}", style: TextStyle(color: Color(0xff49A078),fontWeight: FontWeight.bold, fontSize: 13),),
+                            child: Text("   ${widget.courseName}", style: TextStyle(color: Color(0xff49A078),fontWeight: FontWeight.bold, fontSize: 13),),
                           ),
                           SizedBox(height: 20,),
                           Row(
@@ -135,9 +135,7 @@ class _CourseInfoState extends State<CourseInfo> {
                           shape: BoxShape.circle,
                           color: Color(0xff376274)
                       ),
-                      child: Text("${Globals.choosedCourse.name.substring(0,2)}",style:TextStyle(color: Color(0xffFFA500),shadows: [
-
-                      ],fontWeight: FontWeight.w900, fontSize: 20) ,
+                      child: Text(Globals.choosedCourse.name.substring(0,2).toUpperCase(),style:TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 20) ,
                     ),
                   )
                 ],

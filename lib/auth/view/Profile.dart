@@ -14,7 +14,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     print(Globals.typeOfUsers);
     bool isStudent = Globals.typeOfUsers == 0?true:false;
       return SingleChildScrollView(
@@ -25,13 +25,13 @@ class _ProfileState extends State<Profile> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text("Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),),
+                  child: Text("Profile", style: TextStyle(color: Color(0xff537989), fontWeight: FontWeight.bold, fontSize: 30, fontFamily: "Times New Roman"),),
                 ),
                 const Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions(),)),
                   child: Text("Go to instructions",style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+                        color: Color(0xff49A078), fontWeight: FontWeight.bold, fontSize: 17)),
                 )
               ],
           ),
@@ -48,29 +48,20 @@ class _ProfileState extends State<Profile> {
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(50)),
               ),
-              Positioned(
-                  top: 65,
-                  left: 55,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.edit_note_outlined,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  )),
+
             ],
           ),
             const SizedBox(
             height: 10,
           ),
-            _buildElement(Image(image: AssetImage("assets/images/personalcard.png") ), "Name", "${Globals.user['firstName']} ${Globals.user['lastName']}", AssetImage("assets/images/useredit.png")),
-            Globals.typeOfUsers == 0?_buildElement(Icon(Icons.account_circle_outlined,color: Colors.white,), "ID", "${Globals.user['studentId']}", AssetImage("assets/images/useredit.png",)):Container(),
-            _buildElement(Icon(Icons.phone_enabled, color: Colors.white,), "Phone", "${Globals.user['phone']}", AssetImage("assets/images/useredit.png",)),
+            _buildElement(Image(image: AssetImage("assets/images/personalcard.png"), color: Color(0xff124559)), "Name", "${Globals.user['firstName']} ${Globals.user['lastName']}", AssetImage("assets/images/useredit.png"), false),
+            Globals.typeOfUsers == 0?_buildElement(Icon(Icons.account_circle_outlined,color: Color(0xff124559),), "ID", "${Globals.user['studentId']}", AssetImage("assets/images/useredit.png",), false):Container(),
+            _buildElement(Icon(Icons.phone_enabled, color: Color(0xff124559)), "Phone", "${Globals.user['phone']}", AssetImage("assets/images/useredit.png",), false),
             isStudent?
-            _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",)):
-            _buildElement(Icon(Icons.stacked_bar_chart, color: Colors.white,), "Master’s Specialization", "Master’s : ${Globals.user['master']}", AssetImage("assets/images/useredit.png",)),
-            _buildElement(Icon(Icons.person, color: Colors.white,), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",)),
+            _buildElement(Icon(Icons.stacked_bar_chart, color: Color(0xff124559),), "Level", "level ${Globals.user['level']}", AssetImage("assets/images/useredit.png",), false):
+            _buildElement(Icon(Icons.stacked_bar_chart, color: Color(0xff124559)), "Master’s Specialization", "Master’s : ${Globals.user['master']}", AssetImage("assets/images/useredit.png",), false),
+            _buildElement(Icon(Icons.person, color: Color(0xff124559)), "Email", "${Globals.user['email']}", AssetImage("assets/images/useredit.png",), true),
+            SizedBox(height: 30,),
             ElevatedButton(
               onPressed: () async {
                 await FirebaseAuth.instance.signOut().then((value){
@@ -93,7 +84,7 @@ class _ProfileState extends State<Profile> {
       );
   }
 
-  Widget _buildElement(Widget leading,String title, String content, AssetImage img){
+  Widget _buildElement(Widget leading,String title, String content, AssetImage img, bool isLast){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
@@ -102,7 +93,7 @@ class _ProfileState extends State<Profile> {
             children: [
               leading,
               SizedBox(width: 10,),
-              Text("$title",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),)
+              Text(title, style: TextStyle(color: Color(0xff124559),fontWeight: FontWeight.bold,fontSize: 15),)
             ],
           ),
           SizedBox(height: 20,),
@@ -117,11 +108,12 @@ class _ProfileState extends State<Profile> {
                   onTap: (){
                     print("done");
                   },
-                  child: title == "Email"?Container():Image(image: img,)
+                  child: title == "Email"?Container():Image(image: img, color: const Color(0xff124559),)
               ),
             ],
           ),
-          Divider(color: Color.fromRGBO(0, 0, 0,1), thickness: 1,height: 30,),
+          isLast? SizedBox(): Divider(height: 30, thickness: 2, color: Color(0xff4F4F4F)),
+
         ],
       ),
     );
