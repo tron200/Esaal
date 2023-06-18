@@ -55,8 +55,8 @@ class _MyApp extends State<MyApp> {
     //await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
     //FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
     if(FirebaseAuth.instance.currentUser != null){
+      print("no user");
       await RouteToMainPage();
-      x = MainPage();
       }else{
       x = Login();
     }
@@ -70,9 +70,9 @@ class _MyApp extends State<MyApp> {
     );
   }
 
-  Widget RouteToMainPage(){
+  Future<Widget> RouteToMainPage() async {
     //save data
-    _getDataFromFireBase();
+    await _getDataFromFireBase();
     return MainPage();
 
   }
@@ -81,6 +81,8 @@ class _MyApp extends State<MyApp> {
     var ref = FirebaseFirestore.instance.collection("Users");
     var doc = await ref.doc(FirebaseAuth.instance.currentUser?.uid).get().then((value){
       Globals.user = value.data() as Map;
+      Globals.typeOfUsers = Globals.user['type'];
+      x = MainPage();
       setState(() {
 
       });
