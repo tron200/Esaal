@@ -146,9 +146,8 @@ class _CoursesState extends State<Courses> {
         Globals.choosedCourse = course;
         if(Globals.typeOfUsers == 0){
           Navigator.push(context, MaterialPageRoute(builder: (context) =>   CourseInfoSt(course.name, course.ownerId) )).then((value){
-            setState(() {
 
-            });
+            widget.update();
           });
         }else {
           Globals.currentScreen = Globals.routeToCourseInfo;
