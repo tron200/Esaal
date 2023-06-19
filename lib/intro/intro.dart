@@ -1,12 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../MainPage/MainPage.dart';
+import '../auth/view/Login/Login.dart';
 import '../chat/chat.dart';
+import '../chat/data/Globals.dart';
 
-class Intro extends StatelessWidget {
-  const Intro({Key? key}) : super(key: key);
+class Intro extends StatefulWidget {
+  Function update;
+  Intro(this.update);
 
+  @override
+  State<Intro> createState() => _Intro();
+}
+class _Intro extends State<Intro> {
+
+  route() async {
+    if(FirebaseAuth.instance.currentUser != null){
+      print("no user");
+      await RouteToMainPage();
+    }else{
+      Globals.globalroute = Login();
+      widget.update();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +89,7 @@ class Intro extends StatelessWidget {
             ,
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => MainPage(),));
+                  route();
                 },
                 style: TextButton.styleFrom(
                   fixedSize: const Size(202, 60),
@@ -90,4 +107,27 @@ class Intro extends StatelessWidget {
       ),
     );
   }
+
+  Future<Widget> RouteToMainPage() async {
+    //save data
+    await _getDataFromFireBase();
+    //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => MainPage(),));
+    return MainPage();
+
+  }
+
+  Future<void> _getDataFromFireBase() async {
+    var ref = FirebaseFirestore.instance.collection("Users");
+    var doc = await ref.doc(FirebaseAuth.instance.currentUser?.uid).get().then((value){
+      Globals.user = value.data() as Map;
+      Globals.typeOfUsers = Globals.user['type'];
+      Globals.globalroute = MainPage();
+      widget.update();
+    });
+
+  }
 }
+
+
+
+

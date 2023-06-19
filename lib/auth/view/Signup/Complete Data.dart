@@ -28,6 +28,7 @@ class _CompleteDataState extends State<CompleteData> {
   TextEditingController iDController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _CompleteDataState extends State<CompleteData> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       backgroundColor: Color(0xff124559),
       body: Container(
@@ -69,7 +70,7 @@ class _CompleteDataState extends State<CompleteData> {
                         TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return '*Please enter first name text';
                             }
                             return null;
                           },
@@ -93,6 +94,12 @@ class _CompleteDataState extends State<CompleteData> {
                           height: 15,
                         ),
                         TextFormField(
+                          validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '*Please enter last name text';
+                              }
+                              return null;
+                          },
                           controller: lastNameController,
                           decoration: InputDecoration(
                             filled: true,
@@ -113,6 +120,12 @@ class _CompleteDataState extends State<CompleteData> {
                           height: 15,
                         ),
                         TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '*Please enter phone number text';
+                            }
+                            return null;
+                          },
                           controller: phoneController,
                           decoration: InputDecoration(
                             filled: true,
@@ -134,6 +147,12 @@ class _CompleteDataState extends State<CompleteData> {
                         isdoctor
                             ? Container()
                             : TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '*Please enter your id';
+                            }
+                            return null;
+                          },
                                 controller: iDController,
                                 decoration: InputDecoration(
                                   filled: true,
@@ -219,6 +238,12 @@ class _CompleteDataState extends State<CompleteData> {
                         google
                             ? Container()
                             : TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty || !value.contains("@") || !value.contains(".com")) {
+                              return '*Please enter valid email';
+                            }
+                            return null;
+                          },
                                 controller: emailController,
                                 decoration: InputDecoration(
                                   filled: true,
@@ -243,6 +268,12 @@ class _CompleteDataState extends State<CompleteData> {
                         google
                             ? Container()
                             : TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty || value.length < 8) {
+                              return '*Please enter 8 character at least';
+                            }
+                            return null;
+                          },
                                 controller: passwordController,
                                 obscureText: isSecret,
                                 decoration: InputDecoration(
@@ -321,7 +352,11 @@ class _CompleteDataState extends State<CompleteData> {
   }
 
   bool _validation() {
-    return true;
+
+    if(_formKey.currentState!.validate()){
+      return true;
+    }
+    return false;
   }
 
   Future<void> _saveDataAndNavigteToDashBoard() async {

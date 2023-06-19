@@ -442,7 +442,9 @@ class _State extends State<Chat> {
         int bouns = 0;
         var ref = await FirebaseFirestore.instance.collection("Users").doc(students[i]).get().then((value) async {
           var data = (value.data() as dynamic);
-          bouns = data['${Globals.choosedCourse.id}'] +1;
+          if(typeOfUser == 0) {
+            bouns = data['${Globals.choosedCourse.id}'] + 1;
+          }
           await FirebaseFirestore.instance.collection("Users").doc(students[i]).update(
               {
                 '${Globals.choosedCourse.id}': bouns
