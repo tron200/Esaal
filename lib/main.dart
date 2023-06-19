@@ -55,7 +55,7 @@ class _MyApp extends State<MyApp> {
     //FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
     //await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
     //FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
-    Globals.globalroute = Intro(update;
+    Globals.globalroute = Intro(update);
 
   }
   @override
