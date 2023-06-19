@@ -1,5 +1,6 @@
 import 'package:es2al/intro/intro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../model/Course.dart';
 
@@ -14,7 +15,7 @@ class Globals{
   static const int routeToCourseInfo = 2;
   static Course choosedCourse = Course("", "");
 
-  static Widget globalroute = Container();
+  static Widget globalroute = Scaffold();
   //temps
 static String courseName = "",courseFullName = "";
   static int courseId = 0;

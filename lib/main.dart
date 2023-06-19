@@ -56,7 +56,9 @@ class _MyApp extends State<MyApp> {
     //await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
     //FirebaseDatabase.instance.useDatabaseEmulator("10.0.2.2",9000);
     Globals.globalroute = Intro(update);
+    setState(() {
 
+    });
   }
   @override
   Widget build(BuildContext context) {
