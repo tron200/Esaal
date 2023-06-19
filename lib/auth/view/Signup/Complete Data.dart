@@ -64,6 +64,7 @@ class _CompleteDataState extends State<CompleteData> {
                   ]),
                 ),
                 child: Form(
+                  key: _formKey,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
