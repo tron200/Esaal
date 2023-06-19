@@ -108,7 +108,7 @@ class _DashBordState extends State<DashBoard> {
                           children:  [
                              Text("My Courses", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
                             SizedBox(height: 4),
-                            Text("press on a course button to get course info ", style: TextStyle(color: Colors.white, fontSize: 10),),
+                            Text("Go to your courses ", style: TextStyle(color: Colors.white, fontSize: 10),),
                              SizedBox(height: 20,),
                             // // add courses to go course info
                             // SingleChildScrollView(
