@@ -77,7 +77,7 @@ class _CourseInfoStState extends State<CourseInfoSt> {
                         ],
                       ),
                       const Image(image: AssetImage("assets/images/teacherImage.png")),
-                      Text(widget.courseTeacher, style: const TextStyle(fontWeight: FontWeight.bold),),],
+                      Text(widget.t, style: const TextStyle(fontWeight: FontWeight.bold),),],
                   ),
                 ),
                 SizedBox(height: 20,),
@@ -115,7 +115,7 @@ class _CourseInfoStState extends State<CourseInfoSt> {
                                 SizedBox(height: 22,),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 80.0),
-                                  child: Text(widget.t, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
+                                  child: Text(widget.courseName, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
                                 ),
                                 SizedBox(height: 20,),
                                 ],
