@@ -89,44 +89,50 @@ class _DashBordState extends State<DashBoard> {
              ),
               const SizedBox(height: 10,),
 
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 15, left: 20),
-                    decoration: BoxDecoration(
-                        color: const Color(0xff537989),
-                        borderRadius: BorderRadius.circular(25)
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  [
-                           Text("My Courses", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
-                          SizedBox(height: 4),
-                          Text("press on a course button to get course info ", style: TextStyle(color: Colors.white, fontSize: 10),),
-                           SizedBox(height: 20,),
-                          // // add courses to go course info
-                          // SingleChildScrollView(
-                          //   scrollDirection: Axis.vertical,
-                          //   child:   Row(
-                          //
-                          //     children: [
-                          //       SizedBox(width: 10,),
-                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
-                          //       SizedBox(width: 20,),
-                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
-                          //       SizedBox(width: 20,),
-                          //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
-                          //
-                          //     ],
-                          //   ),
-                          // ),
-                          SizedBox(height: 50,)
-
-                        ],
+              GestureDetector(
+                onTap: () {
+                  Globals.currentScreenIndex = 2;
+                  widget.update();
+                },
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 15, left: 20),
+                      decoration: BoxDecoration(
+                          color: const Color(0xff537989),
+                          borderRadius: BorderRadius.circular(25)
                       ),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:  [
+                             Text("My Courses", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
+                            SizedBox(height: 4),
+                            Text("press on a course button to get course info ", style: TextStyle(color: Colors.white, fontSize: 10),),
+                             SizedBox(height: 20,),
+                            // // add courses to go course info
+                            // SingleChildScrollView(
+                            //   scrollDirection: Axis.vertical,
+                            //   child:   Row(
+                            //
+                            //     children: [
+                            //       SizedBox(width: 10,),
+                            //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                            //       SizedBox(width: 20,),
+                            //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                            //       SizedBox(width: 20,),
+                            //       coursesNames[0]== null? SizedBox() : _createCourseB(coursesNames[0], 1),
+                            //
+                            //     ],
+                            //   ),
+                            // ),
+                            SizedBox(height: 50,)
+
+                          ],
+                        ),
+                    ),
                   ),
-                ),
+              ),
 
 
               SizedBox(height: 10,),

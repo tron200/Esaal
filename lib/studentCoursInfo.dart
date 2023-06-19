@@ -44,7 +44,7 @@ class _StudentCourseInfo extends State<StudentCourseInfo> {
               IconButton(icon: const  Icon(Icons.arrow_back_ios), onPressed: (){
                 Navigator.pop(context);
               },alignment: Alignment.centerLeft),
-              const Text("Java Students", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),),
+              Text("${Globals.choosedCourse.name} Students", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),),
               const SizedBox(height: 5,),
               const Text(
                 "You can know who enrolled , see their bonus and delete any student",
