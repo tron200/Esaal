@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:es2al/Courses/CourseInfo.dart';
 import 'package:es2al/Courses/CourseInfoSt.dart';
@@ -118,6 +119,9 @@ class _CoursesState extends State<Courses> {
 
 
   Future<void> _getCourses() async {
+    await FirebaseFirestore.instance.collection("Users").doc(Globals.user['id']).get().then((value) async {
+      Globals.user = value.data() as dynamic;
+
     final DatabaseReference coursesJson = FirebaseDatabase.instance.ref('subs');
      await coursesJson.get().then((v) {
        print(v.value);
@@ -128,6 +132,7 @@ class _CoursesState extends State<Courses> {
            }
          } else {
            // student
+
            if ((Globals.user['courses'] as List).contains(
                (x.value! as dynamic)['id'])) {
              courses.add(Course.fromJson(x.value, [], []));
@@ -138,6 +143,8 @@ class _CoursesState extends State<Courses> {
 
        });
       });
+
+    });
   }
 
   Coure(Course course) {
