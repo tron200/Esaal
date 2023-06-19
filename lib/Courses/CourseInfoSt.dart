@@ -4,6 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../chat/data/Globals.dart';
+
 class CourseInfoSt extends StatefulWidget {
   String courseName = "";
   String courseTeacher = "";
@@ -138,7 +140,10 @@ class _CourseInfoStState extends State<CourseInfoSt> {
                           top: 15,
                           child: ElevatedButton(
                             onPressed: (){
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => );
+                              Globals.admittedAnswer = false;
+                              Globals.currentScreen = Globals.routeToChat;
+                              Globals.currentScreenIndex = 1;
+                              Navigator.pop(context);
                             },
                             child: const Text("Go to Chat"),
                             style: ButtonStyle(
