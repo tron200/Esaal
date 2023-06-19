@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:es2al/chat/model/question.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,8 +15,17 @@ class CourseInfoSt extends StatefulWidget {
 
 class _CourseInfoStState extends State<CourseInfoSt> {
 
+  @override
+  void initState() {
+    _getName();
+    super.initState();
+  }
 
-
+  _getName() async {
+    await FirebaseFirestore.instance.collection("Users").doc(widget.courseTeacher).get().then((value){
+      widget.courseTeacher = (value.data() as dynamic)['firstName'] + (value.data() as dynamic)['firstName'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
