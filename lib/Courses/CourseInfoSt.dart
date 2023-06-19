@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class CourseInfoSt extends StatefulWidget {
   String courseName = "";
   String courseTeacher = "";
+  String t ="";
   CourseInfoSt(this.courseName, this.courseTeacher);
 
   @override
@@ -23,7 +24,10 @@ class _CourseInfoStState extends State<CourseInfoSt> {
 
   _getName() async {
     await FirebaseFirestore.instance.collection("Users").doc(widget.courseTeacher).get().then((value){
-      widget.courseTeacher = (value.data() as dynamic)['firstName'] + (value.data() as dynamic)['firstName'];
+      widget.t = (value.data() as dynamic)['firstName'] + (value.data() as dynamic)['firstName'];
+      setState(() {
+
+      });
     });
   }
 
@@ -111,7 +115,7 @@ class _CourseInfoStState extends State<CourseInfoSt> {
                                 SizedBox(height: 22,),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 80.0),
-                                  child: Text(widget.courseName, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
+                                  child: Text(widget.t, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),),
                                 ),
                                 SizedBox(height: 20,),
                                 ],
